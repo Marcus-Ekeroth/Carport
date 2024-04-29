@@ -1,18 +1,23 @@
 @startuml
 'https://plantuml.com/class-diagram
 !pragma layout smetana
+hide circles
+hide methods
 
 class Order
 class Carport
 class User
 class Admin
-class OrderList
+class Stykliste
+class Materiale
 
 
-User *-- Order
-Order *-- Carport
-OrderList *-- Order
-Admin *-- OrderList
+
+User"1" --"*" Order
+Order "1"--"1" Stykliste
+Order "1"-- "1"Carport
+Admin"*" -- "*"Order
+Stykliste"*"--"*"Materiale
 
 class Admin{
 email
@@ -27,12 +32,13 @@ class User{
 email
 password
 phone number
+address
 }
 class Order{
 price
 status
-address
-phone number
+shipping address
+order id
 }
 class Admin{
 }
