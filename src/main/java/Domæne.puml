@@ -1,0 +1,40 @@
+@startuml
+'https://plantuml.com/class-diagram
+!pragma layout smetana
+
+class Order
+class Carport
+class User
+class Admin
+class OrderList
+
+
+User *-- Order
+Order *-- Carport
+OrderList *-- Order
+Admin *-- OrderList
+
+class Admin{
+email
+password
+}
+class Carport{
+width
+length
+roof
+}
+class User{
+email
+password
+phone number
+}
+class Order{
+price
+status
+address
+phone number
+}
+class Admin{
+}
+
+@enduml
