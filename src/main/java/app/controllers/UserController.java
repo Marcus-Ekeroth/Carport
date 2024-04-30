@@ -1,5 +1,86 @@
-package app.controllers;/* @auther: Frederik Dupont */
+package app.controllers;
+
+import app.entities.User;
+import app.exceptions.DatabaseException;
+import app.persistence.ConnectionPool;
+import app.persistence.UserMapper;
+import io.javalin.Javalin;
+import io.javalin.http.Context;
 
 public class UserController {
+
+
+    public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
+        app.post("login", ctx -> ctx.render("login.html"));
+        app.post("loggingon", ctx -> loggingon(ctx, connectionPool));
+        app.post("logout", ctx -> logout(ctx, connectionPool));
+        app.post("createuserpage", ctx -> ctx.render("createuser.html"));
+        app.post("createuser", ctx -> createUser(ctx, connectionPool));
+    }
+
+
+    private static void loggingon(Context ctx, ConnectionPool connectionPool) {
+
+        String email = ctx.formParam("email");
+        String password = ctx.formParam("password");
+
+        try {
+            User user = UserMapper.login(email, password, connectionPool);
+            ctx.sessionAttribute("currentUser", user);
+
+
+            if ("admin".equals(user.getRole())) {
+                admin(ctx, connectionPool);
+            } else {
+
+                ctx.render("carportCreation.html");
+            }
+
+        } catch (DatabaseException e) {
+
+            ctx.attribute("message", e.getMessage());
+            ctx.render("index.html");
+        }
+
+
+    }
+
+    private static void createUser(Context ctx, ConnectionPool connectionPool) {
+        String password1 = ctx.formParam("password1");
+        String password2 = ctx.formParam("password2");
+        String email = ctx.formParam("email");
+        String address = ctx.formParam("address");
+        int postalcode = Integer.parseInt(ctx.formParam("postalcode"));
+        String city = ctx.formParam("city");
+        int phonenumber = Integer.parseInt(ctx.formParam("phonenumber"));
+
+
+        // Validering af passwords - at de to matcher
+        if (password1.equals(password2)) {
+            try {
+                UserMapper.createuser(email, password1, address, postalcode, city, phonenumber, connectionPool);
+                ctx.attribute("message", "User created successfully.");
+                ctx.render("index.html");
+            } catch (DatabaseException e) {
+                ctx.attribute("message", e.getMessage());
+                ctx.render("createuser.html");
+            }
+        } else {
+            ctx.attribute("message", "Passwords doesn't match!");
+            ctx.render("createuser.html");
+        }
+    }
+
+    public static void logout(Context ctx, ConnectionPool connectionPool) {
+
+        // Invalidate session
+        ctx.req().getSession().invalidate();
+        ctx.redirect("/");
+    }
+
+    private static void admin(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+
+        ctx.render("admin.html");
+    }
 
 }
