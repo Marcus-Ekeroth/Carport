@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<title>Order</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<p>Hej, <span th:text="${session.currentUser.email}"></span></p>
+
+<form class="CarportCreation" method="post">
+    <p> Carport bredde</p>
+    <select name="carportWidth">
+        <option value="">Vælg carport bredde</option>
+    </select>
+
+    <p> Carport længde</p>
+    <select name="carportLength">
+        <option value="">Vælg carport længde</option>
+    </select>
+
+    <p> Carport trapeztag</p>
+    <select name="carportRoof">
+        <option value="">Vælg carport tagtype</option>
+    </select>
+    <p>Evt. Bemærkninger eller særlige ønsker</p>
+    <textarea name="specialRequests"> </textarea>
+</form>
+
+</body>
+</html>

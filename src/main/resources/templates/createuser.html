@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<title>Signin</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
+</head>
+<body>
+
+<form class="create" method="post">
+    <input type="text" name="name" placeholder="Skriv dit navn"/> <br>
+    <input type="password" name="password1" placeholder="Skriv dit kodeord"/><br>
+    <input type="password" name="password2" placeholder="Skriv dit kodeord igen"/><br>
+    <input type="text" name="email" placeholder="Skriv din email"/> <br>
+    <input type="text" name="address" placeholder="Skriv adresse"/><br>
+    <input type="text" name="city" placeholder="Skriv by"/><br>
+
+    <input type="number" name="postalcode" min="1000" max="9999" placeholder="Skriv dit postnummer"/><br>
+    <input type="number" name="phonenumber" min="10000000" max="99999999" placeholder="Skriv dit tlf nummer"/><br>
+
+
+    <button type="submit" formaction="/createuser" class="linkbutton">Tilmeld</button>
+
+    <div>
+        <p th:text="${message}"></p>
+    </div>
+
+</form>
+<div th:if="${session.currentUser != null}">
+    <form method="post">
+        <button formaction="/logout" class="linkbutton centered-button" type="submit">Log ud</button>
+    </form>
+</div>
+
+
+</body>
+</html>

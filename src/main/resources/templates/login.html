@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<title>Login</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<form class="login-form" method="post">
+    <input type="text" name="email" placeholder="Skriv email"/>
+    <input type="password" name="password" placeholder="Skriv kodeord"/>
+
+    <button type="submit" formaction="/loggingon" class="linkbutton">Log på</button>
+
+    <div>
+        <p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p>
+    </div>
+</form>
+
+<div th:if="${session.currentUser != null}">
+    <span th:text="${session.currentUser.username}"></span>
+    <form method="post">
+        <button formaction="/logout" class="linkbutton" type="submit">Log ud</button>
+    </form>
+
+</div>
+
+<form method="post">
+    <button class="linkbutton centered-button" type="submit" formaction="/createuserpage">Opret bruger</button>
+</form>
+</body>
+</html>
