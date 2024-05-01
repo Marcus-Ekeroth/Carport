@@ -25,13 +25,14 @@ public class UserMapper {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 int id = rs.getInt("user_id");
+                String name = rs.getString("name");
                 String address = rs.getString("address");
                 int postalcode = rs.getInt("postalcode");
                 String city = rs.getString("city");
                 int phonenumber = rs.getInt("phonenumber");
                 String role = rs.getString("role");
 
-                return new User(id, email, password, address, postalcode, city, phonenumber, role);
+                return new User(id, name, email, password, address, postalcode, city, phonenumber, role);
             } else {
                 throw new DatabaseException("Fejl i login. Prøv igen");
             }
@@ -40,20 +41,22 @@ public class UserMapper {
         }
     }
 
-    public static void createuser(String email, String password, String address, int postalcode, String city, int phonenumber, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "insert into users (email, password, address, postalcode, city, phonenumber,role) values (?,?,?,?,?,?,?)";
+    public static void createuser(String name, String email, String password, String address, int postalcode, String city, int phonenumber, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "insert into users (name, email, password, address, postalcode, city, phonenumber,role) values (?,?,?,?,?,?,?,?)";
 
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
-            ps.setString(1, email);
-            ps.setString(2, password);
-            ps.setString(3, address);
-            ps.setInt(4, postalcode);
-            ps.setString(5, city);
-            ps.setInt(6, phonenumber);
-            ps.setString(7, "user");
+            ps.setString(1, name);
+            ps.setString(2, email);
+            ps.setString(3, password);
+            ps.setString(4, address);
+            ps.setInt(5, postalcode);
+            ps.setString(6, city);
+            ps.setInt(7, phonenumber);
+            ps.setString(8, "user");
+
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1) {
@@ -82,6 +85,7 @@ public class UserMapper {
             while (rs.next())
             {
                 int id = rs.getInt("user_id");
+                String name = rs.getString("name");
                 String email = rs.getString("email");
                 String password = rs.getString("password");
                 String address = rs.getString("address");
@@ -89,7 +93,7 @@ public class UserMapper {
                 String city = rs.getString("city");
                 int phonenumber = rs.getInt("phonenumber");
                 String role = rs.getString("role");
-                userList.add(new User(id, email, password, address, postalcode, city, phonenumber, role));
+                userList.add(new User(id, name, email, password, address, postalcode, city, phonenumber, role));
             }
         }
         catch (SQLException e)

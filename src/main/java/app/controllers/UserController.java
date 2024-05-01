@@ -46,6 +46,7 @@ public class UserController {
     }
 
     private static void createUser(Context ctx, ConnectionPool connectionPool) {
+        String name = ctx.formParam("name");
         String password1 = ctx.formParam("password1");
         String password2 = ctx.formParam("password2");
         String email = ctx.formParam("email");
@@ -58,7 +59,7 @@ public class UserController {
         // Validering af passwords - at de to matcher
         if (password1.equals(password2)) {
             try {
-                UserMapper.createuser(email, password1, address, postalcode, city, phonenumber, connectionPool);
+                UserMapper.createuser(name, email, password1, address, postalcode, city, phonenumber, connectionPool);
                 ctx.attribute("message", "User created successfully.");
                 ctx.render("index.html");
             } catch (DatabaseException e) {
