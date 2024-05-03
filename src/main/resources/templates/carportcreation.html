@@ -13,21 +13,58 @@
 <form class="CarportCreation" method="post">
     <p> Carport bredde</p>
     <select name="carportWidth">
-        <option value="">Vælg carport bredde</option>
+        <option value="" disabled selected>Vælg carport bredde</option>
+        <option value="240">240 cm</option>
+        <option value="270">270 cm</option>
+        <option value="300">300 cm</option>
+        <option value="330">330 cm</option>
+        <option value="360">360 cm</option>
+        <option value="390">390 cm</option>
+        <option value="420">420 cm</option>
+        <option value="450">450 cm</option>
+        <option value="480">480 cm</option>
+        <option value="510">510 cm</option>
+        <option value="540">540 cm</option>
+        <option value="570">570 cm</option>
+        <option value="600">600 cm</option>
+
+
     </select>
 
     <p> Carport længde</p>
     <select name="carportLength">
-        <option value="">Vælg carport længde</option>
+        <option value="" disabled selected>Vælg carport længde</option>
+        <option value="240">240 cm</option>
+        <option value="270">270 cm</option>
+        <option value="300">300 cm</option>
+        <option value="330">330 cm</option>
+        <option value="360">360 cm</option>
+        <option value="390">390 cm</option>
+        <option value="420">420 cm</option>
+        <option value="450">450 cm</option>
+        <option value="480">480 cm</option>
+        <option value="510">510 cm</option>
+        <option value="540">540 cm</option>
+        <option value="570">570 cm</option>
+        <option value="600">600 cm</option>
+        <option value="630">630 cm</option>
+        <option value="660">660 cm</option>
+        <option value="690">690 cm</option>
+        <option value="720">720 cm</option>
+        <option value="750">750 cm</option>
+        <option value="780">780 cm</option>
     </select>
 
     <p> Carport trapeztag</p>
     <select name="carportRoof">
-        <option value="">Vælg carport tagtype</option>
+        <option value="" disabled selected>Vælg carport tagtype</option>
+        <option value="Uden tagplader">Uden tagplader</option>
+        <option value="Plasttrapezplader">Plasttrapezplader</option>
     </select>
     <p>Evt. Bemærkninger eller særlige ønsker</p>
-    <textarea name="specialRequests"> </textarea>
-</form>
+    <textarea name="ShippingAddress"> </textarea>
 
+    <button class="linkbutton" type="submit" formaction="/createOrder">Bestil tilbud</button>
+</form>
 </body>
 </html>

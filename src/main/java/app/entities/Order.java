@@ -6,10 +6,11 @@ public class Order {
     private int width;
     private int length;
     private String roof;
-    private boolean status;
+    private String status;
     private String shippingAddress;
+    private int userId;
 
-    public Order(int orderId, int price, int width, int length, String roof, boolean status, String shippingAddress) {
+    public Order(int orderId, int price, int width, int length, String roof, String status, String shippingAddress) {
         this.orderId = orderId;
         this.price = price;
         this.width = width;
@@ -18,6 +19,7 @@ public class Order {
         this.status = status;
         this.shippingAddress = shippingAddress;
     }
+
 
     public int getOrderId() {
         return orderId;
@@ -59,11 +61,11 @@ public class Order {
         this.roof = roof;
     }
 
-    public boolean isStatus() {
+    public String isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -74,6 +76,7 @@ public class Order {
     public void setShippingAddress(String shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
+
 
     @Override
     public String toString() {
