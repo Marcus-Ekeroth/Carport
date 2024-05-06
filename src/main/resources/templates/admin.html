@@ -20,14 +20,14 @@
         <th>Status</th>
         <th>userID</th>
         <th>Details</th>
-        <th>Delete</th>
+        <th>Cancel</th>
     </tr>
     </thead>
 
     <tr th:each="order : ${ordersList}">
         <td th:text="${order.orderId}">order id</td>
         <td th:text="${order.price}">price</td>
-        <td th:text="${order.paid}">Paid</td>
+        <td th:text="${order.status_id}">Status</td>
         <td th:text="${order.userId}">user id</td>
         <td>
             <form class="generic-form" method="post">
@@ -35,12 +35,40 @@
             </form>
         </td>
         <td> <form class="generic-form" method="post">
-            <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/deleteOrder">Delete</button>
+            <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/cancelOrder">Delete</button>
         </form></td>
 
         <!-- VI MANGLER SÆLGER DER GIVER RABAT EVT. PÅ EN ANDEN HTML SIDE -->
     </tr>
 </table>
+
+
+<table class="task-table">
+    <thead>
+    <tr>
+        <th>User ID</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Balance</th>
+        <th>Update Balance</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="user : ${userList}">
+            <td th:text="${user.userId}">user id</td>
+            <td th:text="${user.email}">email</td>
+            <td th:text="${user.role}">role</td>
+            <td th:text="${user.balance}">balance</td>
+            <td>
+                <form class="generic-form" method="post">
+                    <input type="number" name="balance" placeholder="New Balance" min="0" required/>
+                    <button type="submit" name="userId"  th:value="${user.userId}" formaction="/updateBalance" class="linkbutton">Update</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
 
 
 <form method="post">

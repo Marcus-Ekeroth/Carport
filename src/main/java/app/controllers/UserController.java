@@ -3,6 +3,7 @@ package app.controllers;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -81,6 +82,8 @@ public class UserController {
 
     private static void admin(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
+        ctx.attribute("orderList", OrderMapper.getAllOrders(connectionPool));
+        ctx.attribute("userList", UserMapper.getAllUsers(connectionPool));
         ctx.render("admin.html");
     }
 
