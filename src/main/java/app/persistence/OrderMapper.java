@@ -1,12 +1,10 @@
 package app.persistence;
 
+import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.entities.Order;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +27,9 @@ public class OrderMapper {
                 int width = rs.getInt("width");
                 int length = rs.getInt("length");
                 String roof = rs.getString("roof");
-                Boolean status = rs.getBoolean("status");
+                int status = rs.getInt("status");
                 String shippingAddress = rs.getString("shipping_address");
-                orderList.add(new Order(order_id,price,width,length,roof,status,shippingAddress));
+                orderList.add(new Order(order_id, price, width, length, roof, shippingAddress, status));
             }
         } catch (SQLException e) {
             throw new DatabaseException("Database fejl", e.getMessage());
@@ -39,23 +37,27 @@ public class OrderMapper {
         return orderList;
     }
 
-    public static void createOrder(int orderId, int price, int width, int length, String roof, boolean status, String shippingAddress, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "INSERT INTO order (orderId, price, width, length, roof, status, shippingAddress VALUES (?,?,?,?,?,?,?)";
+    public static void createOrder(User user, int width, int length, String roof, String shippingAddress, ConnectionPool connectionPool) throws DatabaseException {
+
+        String sql = "INSERT INTO public.\"order\" (width, length, roof, shipping_address, user_id, status_id, price) VALUES (?,?,?,?,?,?,?)";
+
+
 
         try (
                 Connection connection = connectionPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement(sql)
+                PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+
         ) {
-            ps.setInt(1, orderId);
-            ps.setInt(2, price);
-            ps.setInt(3, width);
-            ps.setInt(4, length);
-            ps.setString(5, roof);
-            ps.setBoolean(6, status);
-            ps.setString(7, shippingAddress);
+            ps.setInt(1, width);
+            ps.setInt(2, length);
+            ps.setString(3, roof);
+            ps.setString(4, shippingAddress);
+            ps.setInt(5, user.getUserId());
+            ps.setInt(6, 1);
+            ps.setDouble(7,0.0);
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1) {
-                throw new DatabaseException("Fejl ved oprettelse af ny order");
+                throw new DatabaseException("Fejl ved oprettelse af ny ordre");
             }
         } catch (SQLException e) {
             String msg = "Der er sket en fejl. Prøv igen";
@@ -108,6 +110,7 @@ public class OrderMapper {
             throw new DatabaseException("Fejl i godkendelse af bestilling", e.getMessage());
         }
     }
+
 
 
 }

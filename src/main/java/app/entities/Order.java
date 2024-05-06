@@ -7,18 +7,17 @@ public class Order {
     private int length;
     private String roof;
     private String shippingAddress;
-
     private int statusId;
 
     public Order(int orderId, double price, int width, int length, String roof, String shippingAddress, int statusId) {
         this.orderId = orderId;
-        this.price = price;
         this.width = width;
         this.length = length;
         this.roof = roof;
         this.shippingAddress = shippingAddress;
         this.statusId = statusId;
     }
+
 
     public int getOrderId() {
         return orderId;
@@ -59,6 +58,7 @@ public class Order {
     public void setRoof(String roof) {
         this.roof = roof;
     }
+
 
     public String getShippingAddress() {
         return shippingAddress;
