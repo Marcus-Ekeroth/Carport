@@ -8,13 +8,16 @@ public class Order {
     private String roof;
     private String shippingAddress;
 
-    public Order(int orderId, double price, int width, int length, String roof, String shippingAddress) {
+    private int statusId;
+
+    public Order(int orderId, double price, int width, int length, String roof, String shippingAddress, int statusId) {
         this.orderId = orderId;
         this.price = price;
         this.width = width;
         this.length = length;
         this.roof = roof;
         this.shippingAddress = shippingAddress;
+        this.statusId = statusId;
     }
 
     public int getOrderId() {
@@ -65,6 +68,14 @@ public class Order {
         this.shippingAddress = shippingAddress;
     }
 
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
@@ -74,6 +85,7 @@ public class Order {
                 ", length=" + length +
                 ", roof='" + roof + '\'' +
                 ", shippingAddress='" + shippingAddress + '\'' +
+                ", statusId=" + statusId +
                 '}';
     }
 }
