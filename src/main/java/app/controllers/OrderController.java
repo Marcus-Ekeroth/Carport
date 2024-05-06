@@ -20,6 +20,7 @@ public class OrderController {
     }
 
 
+    //checkstatus skal nok være en list af orders som looper gennem
     public static void checkStatus(Context ctx, ConnectionPool connectionPool, Order order) {
         switch (order.getStatusId()) {
             case 1:
@@ -29,7 +30,7 @@ public class OrderController {
             case 3:
                 ctx.attribute("status", "Betalt");
             case 4:
-                ctx.attribute("status", "Anulleret");
+                ctx.attribute("status", "Annulleret");
 
         }
 
