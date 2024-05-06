@@ -14,7 +14,8 @@ import static app.persistence.OrderMapper.createOrder;
 public class OrderController {
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
 
-        app.post("admin", ctx -> approveOrder(ctx, connectionPool));
+        app.post("/approveOrder", ctx -> approveOrder(ctx, connectionPool));
+        app.post("/cancelOrder", ctx -> cancelOrder(ctx, connectionPool));
         app.post("/createOrder", ctx -> createOrder(ctx, connectionPool));
     }
 
@@ -38,6 +39,13 @@ public class OrderController {
     public static void approveOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
         OrderMapper.changeStatus(orderId, 2, connectionPool); // statusid skal være 2 da den skal videre til case 2 eftersom udgangspunktet her er at admin har godkendt bestilling
+        ctx.attribute("orderList", OrderMapper.getAllOrders(connectionPool));
+        ctx.render("admin.html");
+    }
+
+    public static void cancelOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        OrderMapper.changeStatus(orderId, 4, connectionPool);
         ctx.attribute("orderList", OrderMapper.getAllOrders(connectionPool));
         ctx.render("admin.html");
     }
