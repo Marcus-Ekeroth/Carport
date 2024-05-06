@@ -39,7 +39,7 @@ public class OrderMapper {
 
     public static void createOrder(User user, int width, int length, String roof, String shippingAddress, ConnectionPool connectionPool) throws DatabaseException {
 
-        String sql = "INSERT INTO order (width, length, roof, shippingAddress, user_id, status_id) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO public.\"order\" (width, length, roof, shipping_address, user_id, status_id, price) VALUES (?,?,?,?,?,?,?)";
 
 
 
@@ -54,15 +54,13 @@ public class OrderMapper {
             ps.setString(4, shippingAddress);
             ps.setInt(5, user.getUserId());
             ps.setInt(6, 1);
+            ps.setDouble(7,0.0);
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1) {
-                throw new DatabaseException("Fejl ved oprettelse af ny bruger");
+                throw new DatabaseException("Fejl ved oprettelse af ny ordre");
             }
         } catch (SQLException e) {
             String msg = "Der er sket en fejl. Prøv igen";
-            if (e.getMessage().startsWith("ERROR: duplicate key value ")) {
-                msg = "Denne email er allerede brugt.";
-            }
             throw new DatabaseException(msg, e.getMessage());
         }
     }

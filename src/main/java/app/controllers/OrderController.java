@@ -25,7 +25,7 @@ public class OrderController {
         try {
             OrderMapper.createOrder(ctx.sessionAttribute("currentUser"),width,length,roof,shippingAddress, connectionPool);
             ctx.attribute("message", "Order created successfully.");
-            ctx.render("index.html");
+            ctx.render("ordreoversigt.html");
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
             ctx.render("carportcreation.html");
