@@ -2,20 +2,18 @@ package app.entities;
 
 public class Order {
     private int orderId;
-    private int price;
+    private double price;
     private int width;
     private int length;
     private String roof;
-    private boolean status;
     private String shippingAddress;
 
-    public Order(int orderId, int price, int width, int length, String roof, boolean status, String shippingAddress) {
+    public Order(int orderId, double price, int width, int length, String roof, String shippingAddress) {
         this.orderId = orderId;
         this.price = price;
         this.width = width;
         this.length = length;
         this.roof = roof;
-        this.status = status;
         this.shippingAddress = shippingAddress;
     }
 
@@ -27,11 +25,11 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -59,14 +57,6 @@ public class Order {
         this.roof = roof;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
     public String getShippingAddress() {
         return shippingAddress;
     }
@@ -83,7 +73,6 @@ public class Order {
                 ", width=" + width +
                 ", length=" + length +
                 ", roof='" + roof + '\'' +
-                ", status=" + status +
                 ", shippingAddress='" + shippingAddress + '\'' +
                 '}';
     }
