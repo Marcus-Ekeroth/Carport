@@ -27,9 +27,9 @@ public class OrderMapper {
                 int width = rs.getInt("width");
                 int length = rs.getInt("length");
                 String roof = rs.getString("roof");
-                String status = rs.getString("status");
+                int status = rs.getInt("status");
                 String shippingAddress = rs.getString("shipping_address");
-                orderList.add(new Order(order_id, price, width, length, roof, status, shippingAddress));
+                orderList.add(new Order(order_id, price, width, length, roof, shippingAddress, status));
             }
         } catch (SQLException e) {
             throw new DatabaseException("Database fejl", e.getMessage());
