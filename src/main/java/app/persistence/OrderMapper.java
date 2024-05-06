@@ -62,5 +62,52 @@ public class OrderMapper {
             throw new DatabaseException(msg, e.getMessage());
         }
     }
+    /*
+    public static Order approveOrder(int statusId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE order SET status_id = ?" +
+                "WHERE order_id = ? ";
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+
+        ){
+            ps.setInt(7,statusId);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int orderId = rs.getInt("order_id");
+                int price = rs.getInt("price");
+                int width = rs.getInt("width");
+                int length = rs.getInt("length");
+                String roof = rs.getString("roof");
+                String shippingAddress = rs.getString("shipping_address");
+                Order order = new Order(orderId, price,width,length,roof,shippingAddress,statusId);
+                return order;
+            }
+        } catch (SQLException e) {
+            String msg = "Der er sket en fejl. Prøv igen";
+            throw new DatabaseException(msg, e.getMessage());
+        }
+
+
+    }
+    */
+    public static void approveOrder(int orderId,int statusId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE order SET status_id = ?" +
+                "WHERE order_id = ? ";
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(7, statusId);
+            ps.setInt(1, orderId);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i godkendelse af bestilling");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i godkendelse af bestilling", e.getMessage());
+        }
+    }
+
 
 }
