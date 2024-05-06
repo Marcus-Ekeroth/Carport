@@ -37,8 +37,7 @@ public class OrderController {
 
     public static void approveOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
-        Order order = ctx.sessionAttribute("order");
-        OrderMapper.approveOrder(orderId, order.getStatusId(), connectionPool);
+        OrderMapper.changeStatus(orderId, 2, connectionPool);
         ctx.attribute("orderList", OrderMapper.getAllOrders(connectionPool));
         ctx.render("admin.html");
     }

@@ -93,7 +93,7 @@ public class OrderMapper {
 
     }
     */
-    public static void approveOrder(int orderId,int statusId, ConnectionPool connectionPool) throws DatabaseException {
+    public static void changeStatus(int orderId,int statusId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "UPDATE order SET status_id = ?" +
                 "WHERE order_id = ? ";
         try (
