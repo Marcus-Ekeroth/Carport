@@ -6,7 +6,8 @@
 </head>
 <body>
 
-<p1>Ny pris</p1>
+<p><span th:text="order.price"></span></p>
+<p>Ny pris</p>
 <form class="generic-form" method="post">
     <input type="number" name="balance" placeholder="New Price" min="0" required/>
     <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/updatePrice" class="linkbutton">Opdater pris</button>
