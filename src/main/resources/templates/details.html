@@ -36,12 +36,7 @@
         <td th:text="${orderDetails.status}">status</td>
         <!-- VI MANGLER SÆLGER DER GIVER RABAT EVT. PÅ EN ANDEN HTML SIDE -->
     </tr>
-    <form class="generic-form" method="post">
-        <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/details">Godkend ordre</button>
-    </form>
-    <form class="generic-form" method="post">
-        <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/details">Details</button>
-    </form>
+
 
 </tbody>
 </table>
@@ -52,11 +47,12 @@
 </head>
 <body>
 
-<p><span th:text="order.price"></span></p>
+<p><span th:text="orderDetails.price"></span></p>
 <p>Ny pris</p>
 <form class="generic-form" method="post">
-    <input type="number" name="balance" placeholder="New Price" min="0" required/>
-    <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/updatePrice" class="linkbutton">Opdater pris</button>
+    <input type="number" name="price" placeholder="New Price" min="0" required/>
+    <button type="submit" name="orderId"  th:value="${orderDetails.orderId}" formaction="/updatePrice" class="linkbutton">Opdater pris</button>
+    <input type="hidden" name="price" th:value="${orderDetails.price}" />
 </form>
 </body>
 </html>
