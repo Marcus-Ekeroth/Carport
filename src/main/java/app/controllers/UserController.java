@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
@@ -7,6 +8,8 @@ import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
+import java.util.List;
 
 public class UserController {
 
@@ -17,6 +20,7 @@ public class UserController {
         app.post("logout", ctx -> logout(ctx, connectionPool));
         app.post("createuserpage", ctx -> ctx.render("createuser.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
+       app.post("details", ctx -> details(ctx,connectionPool));
     }
 
 
@@ -85,6 +89,12 @@ public class UserController {
         ctx.attribute("orderList", OrderMapper.getAllOrders(connectionPool));
         ctx.attribute("userList", UserMapper.getAllUsers(connectionPool));
         ctx.render("admin.html");
+    }
+    private static void details(Context ctx, ConnectionPool connectionPool) {
+        int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        Order order = OrderMapper.getOrderById(orderId, connectionPool);
+        ctx.attribute("orderDetails",order);
+        ctx.render("details.html");
     }
 
 }

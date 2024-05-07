@@ -8,14 +8,18 @@ public class Order {
     private String roof;
     private String shippingAddress;
     private int statusId;
+    private String status;
+    private int userId;
 
-    public Order(int orderId, double price, int width, int length, String roof, String shippingAddress, int statusId) {
+    public Order(int orderId, double price, int width, int length, String roof, String shippingAddress, int userId, String status) {
         this.orderId = orderId;
         this.width = width;
+        this.price=price;
         this.length = length;
         this.roof = roof;
         this.shippingAddress = shippingAddress;
-        this.statusId = statusId;
+        this.status=status;
+        this.userId=userId;
     }
 
 
@@ -75,6 +79,17 @@ public class Order {
     public void setStatusId(int statusId) {
         this.statusId = statusId;
     }
+
+    public int getUserId(){
+        return userId;
+    }
+    public void setUserId(int userId){
+        this.userId=userId;
+    }
+    public String getStatus(){
+        return status;
+    }
+
 
     @Override
     public String toString() {

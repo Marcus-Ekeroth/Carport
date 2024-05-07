@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
+</head>
+<body>
+<table class="order-table">
+    <thead>
+    <tr>
+        <th>Ordre ID</th>
+        <th>Bredde</th>
+        <th>Længde</th>
+        <th>Tag Type</th>
+        <th>Levering adresse</th>
+        <th>Bruger ID</th>
+        <th>Pris</th>
+        <th>Status</th>
+
+
+
+    </tr>
+    </thead>
+<tbody>
+    <tr>
+        <td th:text="${orderDetails.orderId}">order id</td>
+        <td th:text="${orderDetails.width}">width</td>
+        <td th:text="${orderDetails.length}">length</td>
+        <td th:text="${orderDetails.roof}">roof</td>
+        <td th:text="${orderDetails.shippingAddress}">shipping address</td>
+        <td th:text="${orderDetails.userId}">user id</td>
+        <td th:text="${orderDetails.price}">price</td>
+        <td th:text="${orderDetails.status}">status</td>
+        <!-- VI MANGLER SÆLGER DER GIVER RABAT EVT. PÅ EN ANDEN HTML SIDE -->
+    </tr>
+    <form class="generic-form" method="post">
+        <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/details">Godkend ordre</button>
+    </form>
+    <form class="generic-form" method="post">
+        <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/details">Details</button>
+    </form>
+
+</tbody>
+</table>
+</body>
+</html>

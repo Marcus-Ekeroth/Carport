@@ -13,8 +13,7 @@ public class OrderMapper {
 
     public static List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException {
         List<Order> orderList = new ArrayList<>();
-        String sql = "SELECT * FROM order" +
-                "ORDER BY order_id ASC ";
+        String sql = "SELECT o.*, s.status FROM \"order\" o LEFT JOIN status s ON o.status_id = s.status_id;";
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
@@ -22,14 +21,15 @@ public class OrderMapper {
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                int order_id = rs.getInt("order_id");
-                int price = rs.getInt("price");
+                int orderId = rs.getInt("order_id");
+                double price = rs.getDouble("price");
                 int width = rs.getInt("width");
                 int length = rs.getInt("length");
                 String roof = rs.getString("roof");
-                int status = rs.getInt("status");
                 String shippingAddress = rs.getString("shipping_address");
-                orderList.add(new Order(order_id, price, width, length, roof, shippingAddress, status));
+                int userId=rs.getInt("user_id");
+                String status = rs.getString("status");
+                orderList.add(new Order(orderId, price, width, length, roof, shippingAddress, userId, status));
             }
         } catch (SQLException e) {
             throw new DatabaseException("Database fejl", e.getMessage());
@@ -110,7 +110,37 @@ public class OrderMapper {
             throw new DatabaseException("Fejl i godkendelse af bestilling", e.getMessage());
         }
     }
+    public static Order getOrderById(int orderId, ConnectionPool connectionPool) {
 
+        String sql = "SELECT o.*, s.status FROM \"order\" o LEFT JOIN status s ON o.status_id = s.status_id WHERE order_id=?;";
+        Order order;
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql);
+        ) {
+            ps.setInt(1, orderId);
+
+            ResultSet rs = ps.executeQuery();
+            rs.next(); {
+                int id = rs.getInt("order_id");
+                double price = rs.getDouble("price");
+                int width = rs.getInt("width");
+                int length = rs.getInt("length");
+                String roof = rs.getString("roof");
+                String shippingAddress = rs.getString("shipping_address");
+                int userId = rs.getInt("user_id");
+                String status = rs.getString("status");
+
+                order = new Order(id, price, width, length, roof, shippingAddress, userId, status);
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return order;
+    }
 
 
 }
