@@ -111,6 +111,24 @@ public class OrderMapper {
         }
     }
 
+    public static void updatePrice(int orderId, int price, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE order SET price = ? WHERE order_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, orderId);
+            ps.setInt(2, price);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af en balance");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af en balance", e.getMessage());
+        }
+
+    }
 
 
 }
