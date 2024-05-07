@@ -45,5 +45,18 @@
 
 </tbody>
 </table>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p><span th:text="order.price"></span></p>
+<p>Ny pris</p>
+<form class="generic-form" method="post">
+    <input type="number" name="balance" placeholder="New Price" min="0" required/>
+    <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/updatePrice" class="linkbutton">Opdater pris</button>
+</form>
 </body>
 </html>

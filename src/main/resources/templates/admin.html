@@ -44,6 +44,7 @@
         <td>
             <form class="generic-form" method="post">
                 <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/details">Details</button>
+                <input type="hidden" name="price" th:value="${order.price}" />
             </form>
         </td>
 

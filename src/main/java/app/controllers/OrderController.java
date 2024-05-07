@@ -17,6 +17,7 @@ public class OrderController {
         app.post("/approveOrder", ctx -> approveOrder(ctx, connectionPool));
         app.post("/cancelOrder", ctx -> cancelOrder(ctx, connectionPool));
         app.post("/createOrder", ctx -> createOrder(ctx, connectionPool));
+        app.post("/updatePrice", ctx -> updatePrice(ctx, connectionPool));
     }
 
 
@@ -68,5 +69,12 @@ public class OrderController {
             }
 
         }
+    //Metode for at admin kan ændre pris på order
+    private static void updatePrice(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        int price = Integer.parseInt(ctx.formParam("price"));
+        OrderMapper.updatePrice(orderId, price, connectionPool);
+        ctx.render("details");
+    }
 
     }
