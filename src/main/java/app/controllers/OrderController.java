@@ -72,7 +72,7 @@ public class OrderController {
     //Metode for at admin kan ændre pris på order
     private static void updatePrice(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
-        double price = Double.parseDouble(ctx.formParam("price"));
+        double price = Double.parseDouble(ctx.formParam("newprice"));
         OrderMapper.updatePrice(orderId, price, connectionPool);
         ctx.attribute("orderDetails", OrderMapper.getOrderById(orderId,connectionPool));
         ctx.render("details.html");

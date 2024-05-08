@@ -50,9 +50,9 @@
 <p><span th:text="${orderDetails.price}"></span></p>
 <p>Ny pris</p>
 <form class="generic-form" method="post">
-    <input type="number" name="price" placeholder="New Price" min="0" required/>
+    <input type="number" name="newprice" placeholder="New Price" min="0" th:value="${orderDetails.price}" required/>
     <button type="submit" name="orderId"  th:value="${orderDetails.orderId}" formaction="/updatePrice" class="linkbutton">Opdater pris</button>
-    <input type="hidden" name="price" th:value="${orderDetails.price}" />
+
 </form>
 </body>
 </html>
