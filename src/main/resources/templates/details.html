@@ -47,7 +47,7 @@
 </head>
 <body>
 
-<p><span th:text="orderDetails.price"></span></p>
+<p><span th:text="${orderDetails.price}"></span></p>
 <p>Ny pris</p>
 <form class="generic-form" method="post">
     <input type="number" name="price" placeholder="New Price" min="0" required/>

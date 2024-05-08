@@ -148,8 +148,8 @@ public class OrderMapper {
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
-            ps.setInt(1, orderId);
             ps.setDouble(2, price);
+            ps.setInt(1, orderId);
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1) {
                 throw new DatabaseException("Fejl i opdatering af prisen");
