@@ -24,5 +24,27 @@ public class Material {
         this.length = length;
     }
 
+    public int getMaterialId() {
+        return materialId;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getLength() {
+        return length;
+    }
 }
