@@ -75,6 +75,7 @@ public class OrderController {
         double price = Double.parseDouble(ctx.formParam("newprice"));
         OrderMapper.updatePrice(orderId, price, connectionPool);
         ctx.attribute("orderDetails", OrderMapper.getOrderById(orderId,connectionPool));
+        ctx.attribute("oldprice", ctx.formParam("oldprice"));
         ctx.render("details.html");
     }
 

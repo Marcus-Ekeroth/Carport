@@ -47,9 +47,12 @@
 </head>
 <body>
 
+<p>Originale pris</p>
+<p><span th:text="${oldprice}"></span></p>
+<p>Nye pris</p>
 <p><span th:text="${orderDetails.price}"></span></p>
-<p>Ny pris</p>
 <form class="generic-form" method="post">
+    <input type="hidden" name="oldprice" th:value="${oldprice}" />
     <input type="number" name="newprice" placeholder="New Price" min="0" th:value="${orderDetails.price}" required/>
     <button type="submit" name="orderId"  th:value="${orderDetails.orderId}" formaction="/updatePrice" class="linkbutton">Opdater pris</button>
 
