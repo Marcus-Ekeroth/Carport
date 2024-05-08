@@ -152,10 +152,10 @@ public class OrderMapper {
             ps.setDouble(2, price);
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1) {
-                throw new DatabaseException("Fejl i opdatering af en balance");
+                throw new DatabaseException("Fejl i opdatering af prisen");
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Fejl i opdatering af en balance", e.getMessage());
+            throw new DatabaseException("Fejl i opdatering af en pris", e.getMessage());
         }
 
     }
