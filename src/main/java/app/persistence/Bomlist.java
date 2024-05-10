@@ -119,7 +119,22 @@ public class Bomlist {
         }
 
 
-    }
 
+    }
+    public double calculatePrice(){
+        double totalPrice = 0.0;
+        for (Bom bom: bomlist) {
+        Material material = bom.getMaterial();
+        int amount = bom.getAmount();
+        double materialPricePrMeter = material.getPrice();
+        double lengthInMeters = (double)material.getLength()/100;
+
+
+        totalPrice += amount*materialPricePrMeter*lengthInMeters;
+
+
+        }
+        return totalPrice;
+    }
 
 }
