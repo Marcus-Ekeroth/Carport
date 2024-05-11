@@ -64,12 +64,17 @@
     <p>Leverings adresse</p>
     <textarea name="ShippingAddress"> </textarea>
 
+    <div th:if="${session.currentUser != null}">
     <button class="linkbutton" type="submit" formaction="/createOrder">Bestil tilbud</button>
+    </div>
+    <div th:if="${session.currentUser == null}">
+        <button class="linkbutton centered-button" type="submit" formaction="/login">Log ind</button>
+    </div>
 </form>
 
 
 <div th:if="${session.currentUser != null}">
-    <form method="post">
+    <form class="CarportCreation" method="post">
         <button formaction="/logout" class="linkbutton centered-button" type="submit">Log ud</button>
     </form>
 </div>
