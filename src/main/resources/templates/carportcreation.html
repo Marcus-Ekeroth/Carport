@@ -66,5 +66,13 @@
 
     <button class="linkbutton" type="submit" formaction="/createOrder">Bestil tilbud</button>
 </form>
+
+
+<div th:if="${session.currentUser != null}">
+    <form method="post">
+        <button formaction="/logout" class="linkbutton centered-button" type="submit">Log ud</button>
+    </form>
+</div>
+
 </body>
 </html>

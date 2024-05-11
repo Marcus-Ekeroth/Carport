@@ -15,9 +15,16 @@
     <form method="post">
         <button class="linkbutton centered-button" type="submit" formaction="/carportcreationpage">Bestil Carport</button>
     </form>
+    <div th:if="${session.currentUser == null}">
     <form method="post">
-        <button class="linkbutton centered-button" type="submit" formaction="/login">Log in</button>
+        <button class="linkbutton centered-button" type="submit" formaction="/login">Log ind</button>
     </form>
+    </div>
+    <div th:if="${session.currentUser != null}">
+        <form method="post">
+            <button formaction="/logout" class="linkbutton centered-button" type="submit">Log ud</button>
+        </form>
+    </div>
 
 </div>
 
