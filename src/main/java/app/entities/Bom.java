@@ -1,7 +1,5 @@
 package app.entities;
 
-import app.persistence.Material;
-
 public class Bom {
     private Material material;
     private int amount;

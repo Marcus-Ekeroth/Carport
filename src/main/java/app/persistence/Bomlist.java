@@ -1,6 +1,7 @@
 package app.persistence;
 
 import app.entities.Bom;
+import app.entities.Material;
 
 import java.util.ArrayList;
 import java.util.List;
