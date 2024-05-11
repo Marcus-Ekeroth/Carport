@@ -94,20 +94,19 @@ public class OrderMapper {
     }
     */
     public static void changeStatus(int orderId,int statusId, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "UPDATE order SET status_id = ?" +
-                "WHERE order_id = ? ";
+        String sql = "UPDATE public.\"order\" SET status_id = ? WHERE order_id = ?";
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
-            ps.setInt(7, statusId);
-            ps.setInt(1, orderId);
+            ps.setInt(1, statusId);
+            ps.setInt(2, orderId);
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1) {
-                throw new DatabaseException("Fejl i godkendelse af bestilling");
+                throw new DatabaseException("Fejl i opdatering af status");
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Fejl i godkendelse af bestilling", e.getMessage());
+            throw new DatabaseException("Fejl i opdatering af status", e.getMessage());
         }
     }
     public static Order getOrderById(int orderId, ConnectionPool connectionPool) {
