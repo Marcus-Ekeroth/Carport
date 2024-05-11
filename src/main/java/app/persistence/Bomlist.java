@@ -128,11 +128,9 @@ public class Bomlist {
         Material material = bom.getMaterial();
         int amount = bom.getAmount();
         double materialPricePrMeter = material.getPrice();
-        double lengthInMeters = (double)material.getLength()/100;
-
+        double lengthInMeters = material.getLength()/100;
 
         totalPrice += amount*materialPricePrMeter*lengthInMeters;
-
 
         }
         return totalPrice;
