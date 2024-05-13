@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.entities.Material;
 import app.entities.Order;
 import app.entities.Material;
 import app.entities.User;
