@@ -121,7 +121,10 @@ public class Bomlist {
 
 
     }
-    public double calculatePrice(){
+    public double calculatePrice(int carportLength,int carportWidth, List<Material> woodList){
+        addRem(carportLength,woodList);
+        addSpær(carportLength,carportWidth,woodList);
+        addStolpe(carportLength,woodList);
         double totalPrice = 0.0;
         for (Bom bom: bomlist) {
         Material material = bom.getMaterial();

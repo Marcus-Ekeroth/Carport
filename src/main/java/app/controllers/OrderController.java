@@ -3,11 +3,11 @@ package app.controllers;
 import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
-import app.persistence.ConnectionPool;
-import app.persistence.OrderMapper;
-import app.persistence.UserMapper;
+import app.persistence.*;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
+import java.util.List;
 
 import static app.persistence.OrderMapper.createOrder;
 
@@ -36,15 +36,19 @@ public class OrderController {
         ctx.render("admin.html");
     }
 
-    private static void createOrder(Context ctx, ConnectionPool connectionPool) {
+    private static void createOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
         int width = Integer.parseInt(ctx.formParam("carportWidth"));
         int length = Integer.parseInt(ctx.formParam("carportLength"));
         String roof = ctx.formParam("carportRoof");
         String shippingAddress = (ctx.formParam("ShippingAddress"));
+        List<Material> woodList = MaterialMapper.getAllWood(connectionPool);
+
+        Bomlist bomlist = new Bomlist();
+        double price = bomlist.calculatePrice(length,width, woodList);
 
         try {
-            OrderMapper.createOrder(ctx.sessionAttribute("currentUser"), width, length, roof, shippingAddress, connectionPool);
+            OrderMapper.createOrder(ctx.sessionAttribute("currentUser"), width, length, roof, shippingAddress,connectionPool,price);
             ctx.attribute("message", "Order created successfully.");
             ctx.render("ordreoversigt.html");
         } catch (DatabaseException e) {
@@ -58,6 +62,7 @@ public class OrderController {
     private static void updatePrice(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
         double price = Double.parseDouble(ctx.formParam("newprice"));
+
         OrderMapper.updatePrice(orderId, price, connectionPool);
         ctx.attribute("orderDetails", OrderMapper.getOrderById(orderId, connectionPool));
         ctx.attribute("oldprice", ctx.formParam("oldprice"));
@@ -75,6 +80,6 @@ public class OrderController {
         } catch (NumberFormatException e) {
             System.out.println(e.getMessage());
         }
-    }
 
+    }
 }

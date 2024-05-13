@@ -37,7 +37,8 @@ public class OrderMapper {
         return orderList;
     }
 
-    public static void createOrder(User user, int width, int length, String roof, String shippingAddress, ConnectionPool connectionPool) throws DatabaseException {
+
+    public static void createOrder(User user, int width, int length, String roof, String shippingAddress, ConnectionPool connectionPool,double price) throws DatabaseException {
 
         String sql = "INSERT INTO public.\"order\" (width, length, roof, shipping_address, user_id, status_id, price) VALUES (?,?,?,?,?,?,?)";
 
@@ -54,7 +55,7 @@ public class OrderMapper {
             ps.setString(4, shippingAddress);
             ps.setInt(5, user.getUserId());
             ps.setInt(6, 1);
-            ps.setDouble(7,0.0);
+            ps.setDouble(7,price);
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1) {
                 throw new DatabaseException("Fejl ved oprettelse af ny ordre");
@@ -64,6 +65,7 @@ public class OrderMapper {
             throw new DatabaseException(msg, e.getMessage());
         }
     }
+
     /*
     public static Order approveOrder(int statusId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "UPDATE order SET status_id = ?" +
