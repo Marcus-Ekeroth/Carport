@@ -66,35 +66,32 @@ public class OrderMapper {
         }
     }
 
-    /*
-    public static Order approveOrder(int statusId, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "UPDATE order SET status_id = ?" +
-                "WHERE order_id = ? ";
+    public static List<Order> getUserOrder(User user,ConnectionPool connectionPool) throws DatabaseException {
+        List<Order> orderUserList = new ArrayList<>();
+        String sql = "SELECT o.*, s.status FROM \"order\" o LEFT JOIN status s ON o.status_id = s.status_id WHERE o.user_id = ?;";
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1,user.getUserId());
 
-        ){
-            ps.setInt(7,statusId);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int orderId = rs.getInt("order_id");
-                int price = rs.getInt("price");
+                double price = rs.getDouble("price");
                 int width = rs.getInt("width");
                 int length = rs.getInt("length");
                 String roof = rs.getString("roof");
                 String shippingAddress = rs.getString("shipping_address");
-                Order order = new Order(orderId, price,width,length,roof,shippingAddress,statusId);
-                return order;
+                int userId= rs.getInt(user.getUserId());
+                String status = rs.getString("status");
+                orderUserList.add(new Order(orderId, price, width, length, roof, shippingAddress, userId, status));
             }
         } catch (SQLException e) {
-            String msg = "Der er sket en fejl. Prøv igen";
-            throw new DatabaseException(msg, e.getMessage());
+            throw new DatabaseException("Database fejl", e.getMessage());
         }
-
-
+        return orderUserList;
     }
-    */
     public static void changeStatus(int orderId,int statusId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "UPDATE public.\"order\" SET status_id = ? WHERE order_id = ?";
         try (
