@@ -21,6 +21,7 @@ public class OrderController {
         app.post("/createOrder", ctx -> createOrder(ctx, connectionPool));
         app.post("/updatePrice", ctx -> updatePrice(ctx, connectionPool));
         app.post("/changeStatus", ctx -> changeStatus(ctx, connectionPool));
+        app.post("pay", ctx -> pay(ctx,connectionPool));
 
     }
 
@@ -95,5 +96,14 @@ public class OrderController {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    private static void pay(Context ctx, ConnectionPool connectionPool) {
+        int orderId = Integer.parseInt(ctx.formParam("orderId"));
+
+        Order order = OrderMapper.getOrderById(orderId, connectionPool);
+        ctx.attribute("orderDetails",order);
+        System.out.println(orderId);
+        ctx.render("kvittering.html");
     }
 }

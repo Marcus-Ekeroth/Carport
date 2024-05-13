@@ -15,16 +15,21 @@ public class UserController {
 
 
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
-        app.post("login", ctx -> ctx.render("login.html"));
+        app.post("login", ctx -> login(ctx, connectionPool));
         app.post("loggingon", ctx -> loggingon(ctx, connectionPool));
         app.post("logout", ctx -> logout(ctx, connectionPool));
         app.post("createuserpage", ctx -> ctx.render("createuser.html"));
         app.post("carportcreationpage", ctx -> ctx.render("carportCreation.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
-        app.post("details", ctx -> details(ctx,connectionPool));
-        app.post("pay", ctx -> pay(ctx,connectionPool));
+        app.post("details", ctx -> details(ctx, connectionPool));
+        app.post("mysite", ctx -> ctx.render("ordreoversigt.html"));
+
     }
 
+    private static void login(Context ctx, ConnectionPool connectionPool) {
+        ctx.sessionAttribute("loginPosition", ctx.formParam("buttonValue"));
+        ctx.render("login.html");
+    }
 
     private static void loggingon(Context ctx, ConnectionPool connectionPool) {
 
@@ -43,8 +48,7 @@ public class UserController {
                     ctx.render("index.html");
                 } else if ("2".equals(ctx.sessionAttribute("loginPosition"))) {
                     ctx.render("carportCreation.html");
-                }
-                else if ("3".equals(ctx.sessionAttribute("loginPosition"))) {
+                } else if ("3".equals(ctx.sessionAttribute("loginPosition"))) {
                     ctx.render("ordreoversigt.html");
                 }
             }
@@ -98,20 +102,14 @@ public class UserController {
         ctx.attribute("userList", UserMapper.getAllUsers(connectionPool));
         ctx.render("admin.html");
     }
+
     private static void details(Context ctx, ConnectionPool connectionPool) {
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
         Order order = OrderMapper.getOrderById(orderId, connectionPool);
-        ctx.attribute("orderDetails",order);
+        ctx.attribute("orderDetails", order);
         ctx.attribute("oldprice", ctx.formParam("oldprice"));
         ctx.render("details.html");
     }
-    private static void pay(Context ctx, ConnectionPool connectionPool) {
-        int orderId = Integer.parseInt(ctx.formParam("orderId"));
 
-        Order order = OrderMapper.getOrderById(orderId, connectionPool);
-        ctx.attribute("orderDetails",order);
-        System.out.println(orderId);
-        ctx.render("kvittering.html");
-    }
 
 }
