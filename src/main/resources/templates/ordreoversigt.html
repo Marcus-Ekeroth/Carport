@@ -16,6 +16,11 @@
         <button class="linkbutton centered-button" type="submit" formaction="/pay"> Betal</button>
     </form>
 </div>
+<div th:if="${session.currentUser != null}">
+    <form method="post">
+        <button formaction="/logout" class="linkbutton centered-button" type="submit">Log ud</button>
+    </form>
+</div>
 
 
 </body>

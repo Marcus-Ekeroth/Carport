@@ -19,8 +19,9 @@ public class UserController {
         app.post("loggingon", ctx -> loggingon(ctx, connectionPool));
         app.post("logout", ctx -> logout(ctx, connectionPool));
         app.post("createuserpage", ctx -> ctx.render("createuser.html"));
+        app.post("carportcreationpage", ctx -> ctx.render("carportCreation.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
-       app.post("details", ctx -> details(ctx,connectionPool));
+        app.post("details", ctx -> details(ctx,connectionPool));
     }
 
 

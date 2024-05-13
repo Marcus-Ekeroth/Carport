@@ -1,6 +1,7 @@
 package app.persistence;
 
 import app.entities.Bom;
+import app.entities.Material;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,11 +131,9 @@ public class Bomlist {
         Material material = bom.getMaterial();
         int amount = bom.getAmount();
         double materialPricePrMeter = material.getPrice();
-        double lengthInMeters = (double)material.getLength()/100;
-
+        double lengthInMeters = material.getLength()/100;
 
         totalPrice += amount*materialPricePrMeter*lengthInMeters;
-
 
         }
         return totalPrice;

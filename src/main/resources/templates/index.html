@@ -12,13 +12,20 @@
 
 <div class="page">
 
+    <form method="post">
+        <button class="linkbutton centered-button" type="submit" formaction="/carportcreationpage">Bestil Carport</button>
+    </form>
+    <div th:if="${session.currentUser == null}">
+    <form method="post">
+        <button class="linkbutton centered-button" type="submit" formaction="/login">Log ind</button>
+    </form>
+    </div>
+    <div th:if="${session.currentUser != null}">
+        <form method="post">
+            <button formaction="/logout" class="linkbutton centered-button" type="submit">Log ud</button>
+        </form>
+    </div>
 
-    <form method="post">
-        <button class="linkbutton centered-button" type="submit" formaction="/login">Log in</button>
-    </form>
-    <form method="post">
-        <button class="linkbutton centered-button" type="submit" formaction="/bestilcarport">Bestil Carport</button>
-    </form>
 </div>
 
 

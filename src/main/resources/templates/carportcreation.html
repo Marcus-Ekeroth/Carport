@@ -7,9 +7,9 @@
 <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
-
+<div th:if="${session.currentUser != null}">
 <p>Hej, <span th:text="${session.currentUser.email}"></span></p>
-
+</div>
 <form class="CarportCreation" method="post">
     <p> Carport bredde</p>
     <select name="carportWidth">
@@ -64,7 +64,20 @@
     <p>Leverings adresse</p>
     <textarea name="ShippingAddress"> </textarea>
 
+    <div th:if="${session.currentUser != null}">
     <button class="linkbutton" type="submit" formaction="/createOrder">Bestil tilbud</button>
+    </div>
+    <div th:if="${session.currentUser == null}">
+        <button class="linkbutton centered-button" type="submit" formaction="/login">Log ind</button>
+    </div>
 </form>
+
+
+<div th:if="${session.currentUser != null}">
+    <form class="CarportCreation" method="post">
+        <button formaction="/logout" class="linkbutton centered-button" type="submit">Log ud</button>
+    </form>
+</div>
+
 </body>
 </html>
