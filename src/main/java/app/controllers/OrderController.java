@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.entities.Order;
+import app.entities.Material;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
@@ -35,6 +36,11 @@ public class OrderController {
         ctx.attribute("orderList", OrderMapper.getAllOrders(connectionPool));
         ctx.render("admin.html");
     }
+    private static void displayOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        ctx.attribute("orderUserList",OrderMapper.getUserOrder(ctx.sessionAttribute("currentUser"),connectionPool));
+        ctx.render("ordreoversigt.html");
+    }
+
 
     private static void createOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
@@ -50,7 +56,7 @@ public class OrderController {
         try {
             OrderMapper.createOrder(ctx.sessionAttribute("currentUser"), width, length, roof, shippingAddress,connectionPool,price);
             ctx.attribute("message", "Order created successfully.");
-            ctx.render("ordreoversigt.html");
+           displayOrder(ctx,connectionPool);
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
             ctx.render("carportcreation.html");

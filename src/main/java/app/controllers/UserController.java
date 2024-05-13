@@ -22,6 +22,7 @@ public class UserController {
         app.post("carportcreationpage", ctx -> ctx.render("carportCreation.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
         app.post("details", ctx -> details(ctx,connectionPool));
+        app.post("pay", ctx -> pay(ctx,connectionPool));
     }
 
 
@@ -97,6 +98,14 @@ public class UserController {
         ctx.attribute("orderDetails",order);
         ctx.attribute("oldprice", ctx.formParam("oldprice"));
         ctx.render("details.html");
+    }
+    private static void pay(Context ctx, ConnectionPool connectionPool) {
+        int orderId = Integer.parseInt(ctx.formParam("orderId"));
+
+        Order order = OrderMapper.getOrderById(orderId, connectionPool);
+        ctx.attribute("orderDetails",order);
+        System.out.println(orderId);
+        ctx.render("kvittering.html");
     }
 
 }

@@ -9,12 +9,47 @@
 
 <body>
 <p> Ordre Info</p>
+<table class="order-table">
+    <thead>
+    <tr>
+        <th>Ordre ID</th>
+        <th>Bredde</th>
+        <th>Længde</th>
+        <th>Tag Type</th>
+        <th>Levering adresse</th>
+        <th>Pris</th>
+        <th>Status</th>
 
+
+
+    </tr>
+    </thead>
+
+    <tr th:each="order : ${orderUserList}">
+        <td th:text="${order.orderId}">order id</td>
+        <td th:text="${order.width}">width</td>
+        <td th:text="${order.length}">length</td>
+        <td th:text="${order.roof}">roof</td>
+        <td th:text="${order.shippingAddress}">shipping address</td>
+        <td th:text="${order.price}">price</td>
+        <td th:text="${order.status}">status</td>
+
+
+
+        <td>
+
+        <td>
+        <form method="post" >
+            <button class ="linkbutton centered-button" th:if="${order.status == 'Afventer betaling'}" type="submit" formaction="/pay"> Betal</button>
+            <input type="hidden" name="orderId" th:value="${order.orderId}"/>
+        </form>
+        </td>
+
+        <!-- VI MANGLER SÆLGER DER GIVER RABAT EVT. PÅ EN ANDEN HTML SIDE -->
+    </tr>
+</table>
 <div class="page">
 
-    <form method="post">
-        <button class="linkbutton centered-button" type="submit" formaction="/pay"> Betal</button>
-    </form>
 </div>
 <div th:if="${session.currentUser != null}">
     <form method="post">
