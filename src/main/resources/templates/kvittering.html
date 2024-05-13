@@ -7,9 +7,47 @@
 <link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
+<form method="post">
+    <button class="logo"  type="submit" formaction="/index"></button>
+</form>
 
 
 <h1>Tak for din bestilling, <span th:text="${session.currentUser.email} + '!'"></span></h1>
+
+<h1>Din order:</h1>
+
+<table class="order-table">
+    <thead>
+    <tr>
+        <th>Ordre ID</th>
+        <th>Bredde</th>
+        <th>Længde</th>
+        <th>Tag Type</th>
+        <th>Levering adresse</th>
+        <th>Bruger ID</th>
+        <th>Pris</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${payedOrder.orderId}">order id</td>
+        <td th:text="${payedOrder.width}">width</td>
+        <td th:text="${payedOrder.length}">length</td>
+        <td th:text="${payedOrder.roof}">roof</td>
+        <td th:text="${payedOrder.shippingAddress}">shipping address</td>
+        <td th:text="${payedOrder.userId}">user id</td>
+        <td th:text="${payedOrder.price}">price</td>
+        <td th:text="${payedOrder.status}">status</td>
+
+        <td>
+
+        </td>
+        <!-- VI MANGLER SÆLGER DER GIVER RABAT EVT. PÅ EN ANDEN HTML SIDE -->
+    </tr>
+    </tbody>
+</table>
+
 
 <div class="button-container2">
     <form method="post">

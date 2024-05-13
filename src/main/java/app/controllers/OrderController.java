@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.entities.Material;
 import app.entities.Order;
+import app.entities.Material;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
@@ -20,6 +21,7 @@ public class OrderController {
         app.post("/createOrder", ctx -> createOrder(ctx, connectionPool));
         app.post("/updatePrice", ctx -> updatePrice(ctx, connectionPool));
         app.post("/changeStatus", ctx -> changeStatus(ctx, connectionPool));
+        app.post("pay", ctx -> pay(ctx,connectionPool));
 
     }
 
@@ -36,25 +38,35 @@ public class OrderController {
         ctx.attribute("orderList", OrderMapper.getAllOrders(connectionPool));
         ctx.render("admin.html");
     }
+    private static void displayOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        User user = ctx.sessionAttribute ("currentUser");
+        ctx.attribute("orderUserList",OrderMapper.getUserOrder(user,connectionPool));
+        ctx.render("ordreoversigt.html");
+    }
+
 
     private static void createOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
-        int width = Integer.parseInt(ctx.formParam("carportWidth"));
-        int length = Integer.parseInt(ctx.formParam("carportLength"));
-        String roof = ctx.formParam("carportRoof");
-        String shippingAddress = (ctx.formParam("ShippingAddress"));
-        List<Material> woodList = MaterialMapper.getAllWood(connectionPool);
-
-        Bomlist bomlist = new Bomlist();
-        double price = bomlist.calculatePrice(length,width, woodList);
-
         try {
-            OrderMapper.createOrder(ctx.sessionAttribute("currentUser"), width, length, roof, shippingAddress,connectionPool,price);
+            int width = Integer.parseInt(ctx.formParam("carportWidth"));
+            int length = Integer.parseInt(ctx.formParam("carportLength"));
+            String roof = ctx.formParam("carportRoof");
+            String shippingAddress = (ctx.formParam("ShippingAddress"));
+            List<Material> woodList = MaterialMapper.getAllWood(connectionPool);
+
+            Bomlist bomlist = new Bomlist();
+            double price = bomlist.calculatePrice(length, width, woodList);
+            OrderMapper.createOrder(ctx.sessionAttribute("currentUser"), width, length, roof, shippingAddress, connectionPool, price);
             ctx.attribute("message", "Order created successfully.");
-            ctx.render("ordreoversigt.html");
+            displayOrder(ctx, connectionPool);
+
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
             ctx.render("carportcreation.html");
+        } catch (NumberFormatException e) {
+            ctx.attribute("message", "Udfyld alle felterne");
+            ctx.render("carportcreation.html");
+
         }
 
     }
@@ -82,5 +94,14 @@ public class OrderController {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    private static void pay(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int orderId = Integer.parseInt(ctx.formParam("orderId"));
+
+        OrderMapper.changeStatus(orderId, 3, connectionPool);
+
+        ctx.attribute("payedOrder",OrderMapper.getOrderById(orderId, connectionPool));
+        ctx.render("kvittering.html");
     }
 }
