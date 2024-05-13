@@ -38,7 +38,8 @@ public class OrderController {
         ctx.render("admin.html");
     }
     private static void displayOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        ctx.attribute("orderUserList",OrderMapper.getUserOrder(ctx.sessionAttribute("currentUser"),connectionPool));
+        User user = ctx.sessionAttribute ("currentUser");
+        ctx.attribute("orderUserList",OrderMapper.getUserOrder(user,connectionPool));
         ctx.render("ordreoversigt.html");
     }
 

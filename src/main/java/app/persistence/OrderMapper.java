@@ -36,34 +36,6 @@ public class OrderMapper {
         }
         return orderList;
     }
-    public static List<Order> getUserOrder(User user,ConnectionPool connectionPool) throws DatabaseException {
-        List<Order> orderUserList = new ArrayList<>();
-        String sql = "SELECT o.*, s.status FROM \"order\" o LEFT JOIN status s ON o.status_id = s.status_id WHERE o.user_id = ?;";
-        try (
-                Connection connection = connectionPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement(sql)
-        ) {
-            ps.setInt(1,user.getUserId());
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int orderId = rs.getInt("order_id");
-                double price = rs.getDouble("price");
-                int width = rs.getInt("width");
-                int length = rs.getInt("length");
-                String roof = rs.getString("roof");
-                String shippingAddress = rs.getString("shipping_address");
-                int userId = rs.getInt("user_id");
-                String status = rs.getString("status");
-                orderUserList.add(new Order(orderId, price, width, length, roof, shippingAddress, userId, status));
-            }
-        } catch (SQLException e) {
-            throw new DatabaseException("Database fejl", e.getMessage());
-        }
-        return orderUserList;
-    }
-
-
-
     public static void createOrder(User user, int width, int length, String roof, String shippingAddress, ConnectionPool connectionPool,double price) throws DatabaseException {
 
         String sql = "INSERT INTO public.\"order\" (width, length, roof, shipping_address, user_id, status_id, price) VALUES (?,?,?,?,?,?,?)";
