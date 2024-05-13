@@ -1,6 +1,5 @@
 package app.controllers;
 
-import app.entities.Material;
 import app.entities.Order;
 import app.entities.Material;
 import app.entities.User;
@@ -21,6 +20,7 @@ public class OrderController {
         app.post("/createOrder", ctx -> createOrder(ctx, connectionPool));
         app.post("/updatePrice", ctx -> updatePrice(ctx, connectionPool));
         app.post("/changeStatus", ctx -> changeStatus(ctx, connectionPool));
+        app.post("/saveSelected",ctx -> saveSelected(ctx,connectionPool));
 
     }
 
@@ -30,6 +30,17 @@ public class OrderController {
         ctx.attribute("orderList", OrderMapper.getAllOrders(connectionPool));
         ctx.render("admin.html");
     }
+    private static void displayOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        User user = ctx.sessionAttribute ("currentUser");
+        ctx.attribute("orderUserList",OrderMapper.getUserOrder(user,connectionPool));
+        ctx.render("ordreoversigt.html");
+    }
+
+    private static void saveSelected(Context ctx, ConnectionPool connectionPool){
+        String carportWidth = ctx.formParam("carportWidth");
+        String carportLength = ctx.formParam("carportLength");
+        String carportRoof = ctx.formParam("carportRoof");
+        String shippingAddress = ctx.formParam("shippingAddress");
 
     public static void cancelOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
@@ -44,16 +55,30 @@ public class OrderController {
     }
 
 
-    private static void createOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        ctx.sessionAttribute("carportWidth", carportWidth);
+        ctx.sessionAttribute("carportLength", carportLength);
+        ctx.sessionAttribute("carportRoof", carportRoof);
+        ctx.sessionAttribute("shippingAddress", shippingAddress);
 
-        int width = Integer.parseInt(ctx.formParam("carportWidth"));
-        int length = Integer.parseInt(ctx.formParam("carportLength"));
-        String roof = ctx.formParam("carportRoof");
-        String shippingAddress = (ctx.formParam("ShippingAddress"));
-        List<Material> woodList = MaterialMapper.getAllWood(connectionPool);
+    }
 
-        Bomlist bomlist = new Bomlist();
-        double price = bomlist.calculatePrice(length,width, woodList);
+    private static void createOrder(Context ctx, ConnectionPool connectionPool) {
+        try {
+            int width = Integer.parseInt(ctx.formParam("carportWidth"));
+            int length = Integer.parseInt(ctx.formParam("carportLength"));
+            String roof = ctx.formParam("carportRoof");
+            String shippingAddress = (ctx.formParam("ShippingAddress"));
+            Bomlist bomlist = new Bomlist();
+            double price = bomlist.calculatePrice(length, width, woodList);
+
+                OrderMapper.createOrder(ctx.sessionAttribute("currentUser"), width, length, roof, shippingAddress, connectionPool, price);
+                ctx.attribute("message", "Order created successfully.");
+                displayOrder(ctx, connectionPool);
+            } catch (DatabaseException e) {
+                ctx.attribute("message", e.getMessage());
+                ctx.render("carportcreation.html");
+            }
+        }
 
         try {
             OrderMapper.createOrder(ctx.sessionAttribute("currentUser"), width, length, roof, shippingAddress,connectionPool,price);
@@ -70,7 +95,6 @@ public class OrderController {
     private static void updatePrice(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
         double price = Double.parseDouble(ctx.formParam("newprice"));
-
         OrderMapper.updatePrice(orderId, price, connectionPool);
         ctx.attribute("orderDetails", OrderMapper.getOrderById(orderId, connectionPool));
         ctx.attribute("oldprice", ctx.formParam("oldprice"));
@@ -87,7 +111,9 @@ public class OrderController {
             ctx.render("details.html");
         } catch (NumberFormatException e) {
             System.out.println(e.getMessage());
+        } catch (DatabaseException e) {
+            throw new RuntimeException(e);
+        }
         }
 
-    }
 }

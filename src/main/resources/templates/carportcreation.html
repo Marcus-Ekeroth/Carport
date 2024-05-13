@@ -7,13 +7,17 @@
 <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
+<form method="post">
+    <button class="logo"  type="submit" formaction="/index"></button>
+</form>
+
 <div th:if="${session.currentUser != null}">
 <p>Hej, <span th:text="${session.currentUser.email}"></span></p>
 </div>
 <form class="CarportCreation" method="post">
     <p> Carport bredde</p>
     <select name="carportWidth">
-        <option value="" disabled selected>Vælg carport bredde</option>
+        <option value="0" disabled selected>Vælg carport bredde</option>
         <option value="240">240 cm</option>
         <option value="270">270 cm</option>
         <option value="300">300 cm</option>
@@ -33,7 +37,7 @@
 
     <p> Carport længde</p>
     <select name="carportLength">
-        <option value="" disabled selected>Vælg carport længde</option>
+        <option value="0" disabled selected>Vælg carport længde</option>
         <option value="240">240 cm</option>
         <option value="270">270 cm</option>
         <option value="300">300 cm</option>
@@ -57,7 +61,7 @@
 
     <p> Carport trapeztag</p>
     <select name="carportRoof">
-        <option value="" disabled selected>Vælg carport tagtype</option>
+        <option value="null" disabled selected>Vælg carport tagtype</option>
         <option value="Uden tagplader">Uden tagplader</option>
         <option value="Plasttrapezplader">Plasttrapezplader</option>
     </select>
@@ -68,10 +72,12 @@
     <button class="linkbutton" type="submit" formaction="/createOrder">Bestil tilbud</button>
     </div>
     <div th:if="${session.currentUser == null}">
-        <button class="linkbutton centered-button" type="submit" formaction="/login">Log ind</button>
+        <button name="buttonValue" value="2" class="linkbutton centered-button" type="submit" formaction="/login">Log ind</button>
+        <input type="hidden" formaction="/saveSelected"/>
     </div>
 </form>
 
+<div><p th:text="${message}"></p></div>
 
 <div th:if="${session.currentUser != null}">
     <form class="CarportCreation" method="post">
