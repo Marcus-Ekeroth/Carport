@@ -2,22 +2,26 @@ package app.entities;
 
 public class Order {
     private int orderId;
-    private int price;
+    private double price;
     private int width;
     private int length;
     private String roof;
-    private boolean status;
     private String shippingAddress;
+    private int statusId;
+    private String status;
+    private int userId;
 
-    public Order(int orderId, int price, int width, int length, String roof, boolean status, String shippingAddress) {
+    public Order(int orderId, double price, int width, int length, String roof, String shippingAddress, int userId, String status) {
         this.orderId = orderId;
-        this.price = price;
         this.width = width;
+        this.price=price;
         this.length = length;
         this.roof = roof;
-        this.status = status;
         this.shippingAddress = shippingAddress;
+        this.status=status;
+        this.userId=userId;
     }
+
 
     public int getOrderId() {
         return orderId;
@@ -27,11 +31,11 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -59,13 +63,6 @@ public class Order {
         this.roof = roof;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
 
     public String getShippingAddress() {
         return shippingAddress;
@@ -75,6 +72,25 @@ public class Order {
         this.shippingAddress = shippingAddress;
     }
 
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+
+    public int getUserId(){
+        return userId;
+    }
+    public void setUserId(int userId){
+        this.userId=userId;
+    }
+    public String getStatus(){
+        return status;
+    }
+
+
     @Override
     public String toString() {
         return "Order{" +
@@ -83,8 +99,8 @@ public class Order {
                 ", width=" + width +
                 ", length=" + length +
                 ", roof='" + roof + '\'' +
-                ", status=" + status +
                 ", shippingAddress='" + shippingAddress + '\'' +
+                ", statusId=" + statusId +
                 '}';
     }
 }

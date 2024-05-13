@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<table class="order-table">
+    <thead>
+    <tr>
+        <th>Ordre ID</th>
+        <th>Bredde</th>
+        <th>Længde</th>
+        <th>Tag Type</th>
+        <th>Levering adresse</th>
+        <th>Bruger ID</th>
+        <th>Pris</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${orderDetails.orderId}">order id</td>
+        <td th:text="${orderDetails.width}">width</td>
+        <td th:text="${orderDetails.length}">length</td>
+        <td th:text="${orderDetails.roof}">roof</td>
+        <td th:text="${orderDetails.shippingAddress}">shipping address</td>
+        <td th:text="${orderDetails.userId}">user id</td>
+        <td th:text="${orderDetails.price}">price</td>
+        <td th:text="${orderDetails.status}">status</td>
+        <td>
+            <form method="post" action="/changeStatus">
+            <select name="orderStatus">
+                <option value="" disabled selected>Vælg status</option>
+                <option value="1">Afventer godkendelse</option>
+                <option value="2">Afventer betaling</option>
+                <option value="3">Betalt</option>
+                <option value="4">Annulleret</option>
+            </select>
+                <button type="submit" class="linkbutton">Opdater Status</button>
+                <input type="hidden" name="order_id" th:value="${orderDetails.orderId}">
+            </form>
+        </td>
+        <td>
+
+        </td>
+        <!-- VI MANGLER SÆLGER DER GIVER RABAT EVT. PÅ EN ANDEN HTML SIDE -->
+    </tr>
+    </tbody>
+</table>
+<p>Originale pris</p>
+<p><span th:text="${oldprice}"></span></p>
+<p>Nye pris</p>
+<p><span th:text="${orderDetails.price}"></span></p>
+<form class="generic-form" method="post">
+    <input type="hidden" name="oldprice" th:value="${oldprice}"/>
+    <input type="number" name="newprice" placeholder="New Price" min="0" th:value="${orderDetails.price}" required/>
+    <button type="submit" name="orderId" th:value="${orderDetails.orderId}" formaction="/updatePrice"
+            class="linkbutton">Opdater pris
+    </button>
+</form>
+
+
+<form method="post">
+    <button formaction="/logout" class="linkbutton" type="submit">Log out</button>
+</form>
+
+</body>
+</html>

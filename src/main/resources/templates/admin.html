@@ -15,36 +15,52 @@
 <table class="order-table">
     <thead>
     <tr>
-        <th>OrderID</th>
-        <th>Price</th>
+        <th>Ordre ID</th>
+        <th>Bredde</th>
+        <th>Længde</th>
+        <th>Tag Type</th>
+        <th>Levering adresse</th>
+        <th>Bruger ID</th>
+        <th>Pris</th>
         <th>Status</th>
-        <th>userID</th>
-        <th>Details</th>
-        <th>Delete</th>
+        <th>Detaljer</th>
+
+
+
     </tr>
     </thead>
 
-    <tr th:each="order : ${ordersList}">
+    <tr th:each="order : ${orderList}">
         <td th:text="${order.orderId}">order id</td>
-        <td th:text="${order.price}">price</td>
-        <td th:text="${order.paid}">Paid</td>
+        <td th:text="${order.width}">width</td>
+        <td th:text="${order.length}">length</td>
+        <td th:text="${order.roof}">roof</td>
+        <td th:text="${order.shippingAddress}">shipping address</td>
         <td th:text="${order.userId}">user id</td>
+        <td th:text="${order.price}">price</td>
+        <td th:text="${order.status}">status</td>
+
+
+
+        <td>
+
         <td>
             <form class="generic-form" method="post">
                 <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/details">Details</button>
+                <input type="hidden" name="oldprice" th:value="${order.price}" />
             </form>
         </td>
-        <td> <form class="generic-form" method="post">
-            <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/deleteOrder">Delete</button>
-        </form></td>
 
         <!-- VI MANGLER SÆLGER DER GIVER RABAT EVT. PÅ EN ANDEN HTML SIDE -->
     </tr>
 </table>
 
 
+
+
+
 <form method="post">
-    <button formaction="/adminlogout" class="linkbutton" type="submit">Log out</button>
+    <button formaction="/logout" class="linkbutton" type="submit">Log out</button>
 </form>
 
 </body>

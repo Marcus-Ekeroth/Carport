@@ -1,11 +1,15 @@
 package app.controllers;
 
+import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
+import java.util.List;
 
 public class UserController {
 
@@ -15,7 +19,9 @@ public class UserController {
         app.post("loggingon", ctx -> loggingon(ctx, connectionPool));
         app.post("logout", ctx -> logout(ctx, connectionPool));
         app.post("createuserpage", ctx -> ctx.render("createuser.html"));
+        app.post("carportcreationpage", ctx -> ctx.render("carportCreation.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
+        app.post("details", ctx -> details(ctx,connectionPool));
     }
 
 
@@ -81,7 +87,16 @@ public class UserController {
 
     private static void admin(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
+        ctx.attribute("orderList", OrderMapper.getAllOrders(connectionPool));
+        ctx.attribute("userList", UserMapper.getAllUsers(connectionPool));
         ctx.render("admin.html");
+    }
+    private static void details(Context ctx, ConnectionPool connectionPool) {
+        int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        Order order = OrderMapper.getOrderById(orderId, connectionPool);
+        ctx.attribute("orderDetails",order);
+        ctx.attribute("oldprice", ctx.formParam("oldprice"));
+        ctx.render("details.html");
     }
 
 }
