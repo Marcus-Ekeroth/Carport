@@ -15,8 +15,7 @@ public class UserController {
 
 
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
-        app.post("index",ctx ->ctx.render("index.html"));
-        app.post("login", ctx -> login(ctx,connectionPool));
+        app.post("login", ctx -> ctx.render("login.html"));
         app.post("loggingon", ctx -> loggingon(ctx, connectionPool));
         app.post("logout", ctx -> logout(ctx, connectionPool));
         app.post("createuserpage", ctx -> ctx.render("createuser.html"));
@@ -24,13 +23,9 @@ public class UserController {
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
         app.post("details", ctx -> details(ctx,connectionPool));
         app.post("pay", ctx -> pay(ctx,connectionPool));
-        app.post("mysite", ctx -> ctx.render("ordreoversigt.html"));
     }
 
-private static void login(Context ctx, ConnectionPool connectionPool){
-        ctx.sessionAttribute("loginPosition",ctx.formParam("buttonValue"));
-        ctx.render("login.html");
-    }
+
     private static void loggingon(Context ctx, ConnectionPool connectionPool) {
 
         String email = ctx.formParam("email");

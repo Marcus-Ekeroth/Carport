@@ -33,7 +33,7 @@
     </div>
     <div th:if="${session.currentUser != null}">
         <form method="post">
-            <button type="submit" name="mysite" formaction="/mysite" class="linkbutton centered-button">Min side</button>
+            <button type="submit" name="buttonValue" formaction="/mysite" class="linkbutton centered-button">Min side</button>
         </form>
     </div>
     <div th:if="${session.currentUser == null}">
