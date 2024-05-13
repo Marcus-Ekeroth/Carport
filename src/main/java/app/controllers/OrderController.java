@@ -47,8 +47,6 @@ public class OrderController {
 
     private static void createOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
-
-
         try {
             int width = Integer.parseInt(ctx.formParam("carportWidth"));
             int length = Integer.parseInt(ctx.formParam("carportLength"));
@@ -98,12 +96,12 @@ public class OrderController {
 
     }
 
-    private static void pay(Context ctx, ConnectionPool connectionPool) {
+    private static void pay(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
 
-        Order order = OrderMapper.getOrderById(orderId, connectionPool);
-        ctx.attribute("orderDetails",order);
-        System.out.println(orderId);
+        OrderMapper.changeStatus(orderId, 3, connectionPool);
+
+        ctx.attribute("payedOrder",OrderMapper.getOrderById(orderId, connectionPool));
         ctx.render("kvittering.html");
     }
 }

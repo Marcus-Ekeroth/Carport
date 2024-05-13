@@ -22,7 +22,7 @@ public class UserController {
         app.post("carportcreationpage", ctx -> ctx.render("carportCreation.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
         app.post("details", ctx -> details(ctx, connectionPool));
-        app.post("mysite", ctx -> ctx.render("ordreoversigt.html"));
+        app.post("mysite", ctx -> displayOrder(ctx, connectionPool));
 
     }
 
@@ -49,7 +49,7 @@ public class UserController {
                 } else if ("2".equals(ctx.sessionAttribute("loginPosition"))) {
                     ctx.render("carportCreation.html");
                 } else if ("3".equals(ctx.sessionAttribute("loginPosition"))) {
-                    ctx.render("ordreoversigt.html");
+                    displayOrder(ctx, connectionPool);
                 }
             }
 
@@ -111,5 +111,10 @@ public class UserController {
         ctx.render("details.html");
     }
 
+    private static void displayOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        User user = ctx.sessionAttribute ("currentUser");
+        ctx.attribute("orderUserList",OrderMapper.getUserOrder(user,connectionPool));
+        ctx.render("ordreoversigt.html");
+    }
 
 }
