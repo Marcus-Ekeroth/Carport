@@ -7,6 +7,7 @@ public class Material {
     private String description;
     private double price;
     private int length;
+    private int materialVariantId;
 
     public Material(int materialId, String name, String unit, String description, double price) {
         this.materialId = materialId;
@@ -15,13 +16,14 @@ public class Material {
         this.description = description;
         this.price = price;
     }
-    public Material(int materialId, String name, String unit, String description, double price, int length) {
+    public Material(int materialId, String name, String unit, String description, double price, int length, int materialVariantId) {
         this.materialId = materialId;
         this.name = name;
         this.unit = unit;
         this.description = description;
         this.price = price;
         this.length = length;
+        this.materialVariantId = materialVariantId;
     }
 
     public int getMaterialId() {
