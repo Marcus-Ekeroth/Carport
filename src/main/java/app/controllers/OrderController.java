@@ -78,7 +78,7 @@ public class OrderController {
 
         OrderMapper.updatePrice(orderId, price, connectionPool);
         ctx.attribute("orderDetails", OrderMapper.getOrderById(orderId, connectionPool));
-        ctx.attribute("oldprice", ctx.formParam("oldprice"));
+        ctx.attribute("oldprice", ctx.sessionAttribute("oldprice"));
         ctx.render("details.html");
     }
 
@@ -89,6 +89,7 @@ public class OrderController {
             OrderMapper.changeStatus(orderId, orderStatus, connectionPool);
             Order order = OrderMapper.getOrderById(orderId, connectionPool);
             ctx.attribute("orderDetails", order);
+            ctx.attribute("oldprice", ctx.sessionAttribute("oldprice"));
             ctx.render("details.html");
         } catch (NumberFormatException e) {
             System.out.println(e.getMessage());

@@ -107,7 +107,8 @@ public class UserController {
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
         Order order = OrderMapper.getOrderById(orderId, connectionPool);
         ctx.attribute("orderDetails", order);
-        ctx.attribute("oldprice", ctx.formParam("oldprice"));
+        ctx.sessionAttribute("oldprice", ctx.formParam("oldprice"));
+        ctx.attribute("oldprice", ctx.sessionAttribute("oldprice"));
         ctx.render("details.html");
     }
 

@@ -31,7 +31,7 @@
         <td th:text="${order.length}">length</td>
         <td th:text="${order.roof}">roof</td>
         <td th:text="${order.shippingAddress}">shipping address</td>
-        <td th:text="${order.price}">price</td>
+        <td th:text="${order.status == 'Afventer betaling'} ? ${order.price} : 'N/A'">N/A</td>
         <td th:text="${order.status}">status</td>
 
 
