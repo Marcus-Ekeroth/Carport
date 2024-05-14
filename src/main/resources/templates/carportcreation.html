@@ -85,5 +85,11 @@
     </form>
 </div>
 
+<div th:if="${session.currentUser != null}">
+    <form  class="CarportCreation" method="post">
+        <button type="submit" name="buttonValue" formaction="/mysite" class="linkbutton centered-button">Min side</button>
+    </form>
+</div>
+
 </body>
 </html>

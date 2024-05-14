@@ -23,7 +23,7 @@ public class UserController {
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
         app.post("details", ctx -> details(ctx, connectionPool));
         app.post("mysite", ctx -> displayOrder(ctx, connectionPool));
-
+        app.post("admin", ctx -> admin(ctx,connectionPool));
     }
 
     private static void login(Context ctx, ConnectionPool connectionPool) {
