@@ -1,9 +1,6 @@
 package app.controllers;
 
-import app.entities.Material;
-import app.entities.Order;
-import app.entities.Material;
-import app.entities.User;
+import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
 import io.javalin.Javalin;
@@ -56,7 +53,8 @@ public class OrderController {
 
             Bomlist bomlist = new Bomlist();
             double price = bomlist.calculatePrice(length, width, woodList);
-            OrderMapper.createOrder(ctx.sessionAttribute("currentUser"), width, length, roof, shippingAddress, connectionPool, price);
+            int orderId = OrderMapper.createOrder(ctx.sessionAttribute("currentUser"), width, length, roof, shippingAddress, connectionPool, price);
+            saveBomlist(orderId, bomlist, connectionPool);
             ctx.attribute("message", "Order created successfully.");
             displayOrder(ctx, connectionPool);
 
@@ -69,6 +67,12 @@ public class OrderController {
 
         }
 
+    }
+
+    private static void saveBomlist(int orderId, Bomlist bomlist, ConnectionPool connectionPool) throws DatabaseException {
+        for (Bom bom: bomlist.getOrderLines()) {
+            BomMapper.createBom(orderId, bom.getMaterial().getMaterialId(), bom.getMaterial().getMaterialVariantId(),  bom.getAmount(), connectionPool);
+        }
     }
 
     //Metode for at admin kan ændre pris på order

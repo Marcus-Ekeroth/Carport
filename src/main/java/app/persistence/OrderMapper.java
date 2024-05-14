@@ -36,16 +36,12 @@ public class OrderMapper {
         }
         return orderList;
     }
-    public static void createOrder(User user, int width, int length, String roof, String shippingAddress, ConnectionPool connectionPool,double price) throws DatabaseException {
-
+    public static int createOrder(User user, int width, int length, String roof, String shippingAddress, ConnectionPool connectionPool, double price) throws DatabaseException {
         String sql = "INSERT INTO public.\"order\" (width, length, roof, shipping_address, user_id, status_id, price) VALUES (?,?,?,?,?,?,?)";
-
-
 
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
-
         ) {
             ps.setInt(1, width);
             ps.setInt(2, length);
@@ -53,10 +49,19 @@ public class OrderMapper {
             ps.setString(4, shippingAddress);
             ps.setInt(5, user.getUserId());
             ps.setInt(6, 1);
-            ps.setDouble(7,price);
+            ps.setDouble(7, price);
+
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1) {
                 throw new DatabaseException("Fejl ved oprettelse af ny ordre");
+            }
+
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                } else {
+                    throw new DatabaseException("Fejl ved hentning af ordre ID");
+                }
             }
         } catch (SQLException e) {
             String msg = "Der er sket en fejl. Prøv igen";

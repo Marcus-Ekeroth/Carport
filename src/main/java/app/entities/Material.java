@@ -30,6 +30,10 @@ public class Material {
         return materialId;
     }
 
+    public int getMaterialVariantId() {
+        return materialVariantId;
+    }
+
     public String getName() {
         return name;
     }
