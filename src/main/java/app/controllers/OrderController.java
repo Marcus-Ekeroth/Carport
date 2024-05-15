@@ -19,6 +19,7 @@ public class OrderController {
         app.post("/updatePrice", ctx -> updatePrice(ctx, connectionPool));
         app.post("/changeStatus", ctx -> changeStatus(ctx, connectionPool));
         app.post("pay", ctx -> pay(ctx,connectionPool));
+        app.post("deleteOrder", ctx -> deleteOrder(ctx, connectionPool));
 
     }
 
@@ -108,5 +109,11 @@ public class OrderController {
 
         ctx.attribute("payedOrder",OrderMapper.getOrderById(orderId, connectionPool));
         ctx.render("kvittering.html");
+    }
+
+    private static void deleteOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException{
+        int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        OrderMapper.deleteOrderById(orderId, connectionPool);
+        displayOrder(ctx, connectionPool);
     }
 }

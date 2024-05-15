@@ -142,6 +142,25 @@ public class OrderMapper {
         }
         return order;
     }
+
+    public static void deleteOrderById(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+
+        String sql = "DELETE FROM \"order\" WHERE order_id=?;";
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql);
+        ) {
+            ps.setInt(1, orderId);
+            int rowsAffected = ps.executeUpdate();
+            if(rowsAffected != 1){
+                throw new DatabaseException("Fejl i sletning af order");
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i sletning af order", e.getMessage());
+        }
+    }
+
     public static void updatePrice(int orderId, double price, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "UPDATE public.\"order\" SET price = ? WHERE order_id = ?";
 
