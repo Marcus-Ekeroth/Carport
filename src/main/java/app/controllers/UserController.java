@@ -19,8 +19,8 @@ public class UserController {
         app.post("login", ctx -> login(ctx, connectionPool));
         app.post("loggingon", ctx -> loggingon(ctx, connectionPool));
         app.post("logout", ctx -> logout(ctx, connectionPool));
-        app.post("createuserpage", ctx -> ctx.render("createuser.html"));
-        app.post("carportcreationpage", ctx -> ctx.render("carportCreation.html"));
+        app.post("createuserpage", ctx -> ctx.render("/createuser.html"));
+        app.post("carportcreationpage", ctx -> ctx.render("/carportcreation.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
         app.post("details", ctx -> details(ctx, connectionPool));
         app.post("mysite", ctx -> displayOrder(ctx, connectionPool));
@@ -49,7 +49,7 @@ public class UserController {
                 if ("1".equals(ctx.sessionAttribute("loginPosition"))) {
                     ctx.render("index.html");
                 } else if ("2".equals(ctx.sessionAttribute("loginPosition"))) {
-                    ctx.render("carportCreation.html");
+                    ctx.render("carportcreation.html");
                 } else if ("3".equals(ctx.sessionAttribute("loginPosition"))) {
                     displayOrder(ctx, connectionPool);
                 }
