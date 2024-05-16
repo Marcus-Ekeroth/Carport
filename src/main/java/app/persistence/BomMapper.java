@@ -33,7 +33,7 @@ public class BomMapper {
 
     public static Bomlist getBomlistById(int orderId, ConnectionPool connectionPool) throws DatabaseException {
 
-        String sql = "SELECT b.order_id, m.*, mv.length FROM bom b LEFT JOIN material m ON b.material_id = m.material_id LEFT JOIN material_variant mv ON b.material_variant_id = mv.material_variant_id WHERE b.order_id=?";
+        String sql = "SELECT b.order_id, b.amount, m.*, mv.material_variant_id, mv.length FROM bom b LEFT JOIN material m ON b.material_id = m.material_id LEFT JOIN material_variant mv ON b.material_variant_id = mv.material_variant_id WHERE b.order_id=?";
 
         Bomlist bomlist = new Bomlist();
 

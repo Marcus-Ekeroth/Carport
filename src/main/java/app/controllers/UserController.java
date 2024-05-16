@@ -3,6 +3,7 @@ package app.controllers;
 import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
+import app.persistence.BomMapper;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
@@ -104,12 +105,13 @@ public class UserController {
         ctx.render("admin.html");
     }
 
-    private static void details(Context ctx, ConnectionPool connectionPool) {
+    private static void details(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
         Order order = OrderMapper.getOrderById(orderId, connectionPool);
         ctx.attribute("orderDetails", order);
         ctx.sessionAttribute("oldprice", ctx.formParam("oldprice"));
         ctx.attribute("oldprice", ctx.sessionAttribute("oldprice"));
+        ctx.attribute("orderlines", BomMapper.getBomlistById(orderId,connectionPool).getOrderLines());
         ctx.render("details.html");
     }
 
