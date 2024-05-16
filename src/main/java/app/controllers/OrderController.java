@@ -84,6 +84,7 @@ public class OrderController {
         OrderMapper.updatePrice(orderId, price, connectionPool);
         ctx.attribute("orderDetails", OrderMapper.getOrderById(orderId, connectionPool));
         ctx.attribute("oldprice", ctx.sessionAttribute("oldprice"));
+        ctx.attribute("orderlines", BomMapper.getBomlistById(orderId,connectionPool).getOrderLines());
         ctx.render("details.html");
     }
 
@@ -95,9 +96,11 @@ public class OrderController {
             Order order = OrderMapper.getOrderById(orderId, connectionPool);
             ctx.attribute("orderDetails", order);
             ctx.attribute("oldprice", ctx.sessionAttribute("oldprice"));
+            ctx.attribute("orderlines", BomMapper.getBomlistById(orderId,connectionPool).getOrderLines());
             ctx.render("details.html");
         } catch (NumberFormatException e) {
-            System.out.println(e.getMessage());
+            ctx.attribute("message", "Vælg en status");
+            ctx.render("details.html");
         }
 
     }

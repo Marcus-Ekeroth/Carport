@@ -24,7 +24,7 @@ public class UserController {
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
         app.post("details", ctx -> details(ctx, connectionPool));
         app.post("mysite", ctx -> displayOrder(ctx, connectionPool));
-        app.post("admin", ctx -> admin(ctx,connectionPool));
+        app.post("admin", ctx -> admin(ctx, connectionPool));
         app.post("index", ctx -> ctx.redirect("/"));
     }
 
@@ -65,31 +65,39 @@ public class UserController {
     }
 
     private static void createUser(Context ctx, ConnectionPool connectionPool) {
-        String name = ctx.formParam("name");
-        String password1 = ctx.formParam("password1");
-        String password2 = ctx.formParam("password2");
-        String email = ctx.formParam("email");
-        String address = ctx.formParam("address");
-        int postalcode = Integer.parseInt(ctx.formParam("postalcode"));
-        String city = ctx.formParam("city");
-        int phonenumber = Integer.parseInt(ctx.formParam("phonenumber"));
+        try {
+            String name = ctx.formParam("name");
+            String password1 = ctx.formParam("password1");
+            String password2 = ctx.formParam("password2");
+            String email = ctx.formParam("email");
+            String address = ctx.formParam("address");
+            int postalcode = Integer.parseInt(ctx.formParam("postalcode"));
+            String city = ctx.formParam("city");
+            int phonenumber = Integer.parseInt(ctx.formParam("phonenumber"));
 
 
-        // Validering af passwords - at de to matcher
-        if (password1.equals(password2)) {
-            try {
+            // Validering af passwords - at de to matcher
+            if (password1.equals(password2)) {
+
+
                 UserMapper.createuser(name, email, password1, address, postalcode, city, phonenumber, connectionPool);
                 ctx.attribute("message", "User created successfully.");
                 ctx.render("index.html");
-            } catch (DatabaseException e) {
-                ctx.attribute("message", e.getMessage());
-                ctx.render("createuser.html");
-            }
-        } else {
-            ctx.attribute("message", "Passwords doesn't match!");
+
+        } else{
+            ctx.attribute("message", "Passwords matcher ikke");
+            ctx.render("createuser.html");
+        }
+        }catch(DatabaseException e){
+            ctx.attribute("message", e.getMessage());
+            ctx.render("createuser.html");
+        } catch(NumberFormatException e){
+            ctx.attribute("message", "Udfyld alle felter");
             ctx.render("createuser.html");
         }
     }
+
+
 
     public static void logout(Context ctx, ConnectionPool connectionPool) {
 
