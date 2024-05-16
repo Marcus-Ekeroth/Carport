@@ -24,6 +24,7 @@ public class UserController {
         app.post("details", ctx -> details(ctx, connectionPool));
         app.post("mysite", ctx -> displayOrder(ctx, connectionPool));
         app.post("admin", ctx -> admin(ctx,connectionPool));
+        app.post("index", ctx -> ctx.redirect("/"));
     }
 
     private static void login(Context ctx, ConnectionPool connectionPool) {
