@@ -34,6 +34,8 @@ public class Bomlist {
         int amount = 4;
         if (carportLength > (maxStolpeDis + extraSpaceFront + extraSpaceBehind)) {
             amount = 6;
+        }else if(carportLength > (2*maxStolpeDis + extraSpaceFront + extraSpaceBehind)){
+            amount = 8;
         }
 
         addToBomlist(new Bom(stolpe, amount));
