@@ -6,10 +6,13 @@ import app.entities.Material;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
+import app.services.CarportSvg;
+import app.services.Svg;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
 import java.util.List;
+import java.util.Locale;
 
 import static app.persistence.OrderMapper.createOrder;
 
@@ -21,7 +24,8 @@ public class OrderController {
         app.post("/createOrder", ctx -> createOrder(ctx, connectionPool));
         app.post("/updatePrice", ctx -> updatePrice(ctx, connectionPool));
         app.post("/changeStatus", ctx -> changeStatus(ctx, connectionPool));
-        app.post("pay", ctx -> pay(ctx,connectionPool));
+        app.post("/pay", ctx -> pay(ctx,connectionPool));
+        app.post("/showorder", ctx ->  showOrder(ctx,connectionPool));
 
     }
 
@@ -50,6 +54,8 @@ public class OrderController {
         try {
             int width = Integer.parseInt(ctx.formParam("carportWidth"));
             int length = Integer.parseInt(ctx.formParam("carportLength"));
+            ctx.sessionAttribute("carportWidth",width);
+            ctx.sessionAttribute("carportLength",length);
             String roof = ctx.formParam("carportRoof");
             String shippingAddress = (ctx.formParam("ShippingAddress"));
             List<Material> woodList = MaterialMapper.getAllWood(connectionPool);
@@ -102,6 +108,22 @@ public class OrderController {
         OrderMapper.changeStatus(orderId, 3, connectionPool);
 
         ctx.attribute("payedOrder",OrderMapper.getOrderById(orderId, connectionPool));
-        ctx.render("kvittering.html");
+        ctx.render("receipt.html");
+    }
+    private static void showOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int length = ctx.sessionAttribute("carportLength");
+        int width = ctx.sessionAttribute("carportWidth");
+        Locale.setDefault(new Locale("US"));
+        CarportSvg svg = new CarportSvg(width,length);
+        Svg svgArrows = new Svg(0,0,"0 0 1000 1000","auto");
+
+        int arrowOffset = 10;
+        int rotate = 90;
+        svgArrows.addArrow(width+arrowOffset,length,width+arrowOffset,length,"stroke-width:1px;stroke:#000000;fill:#ffffff");
+        svgArrows.addArrow(width,length+arrowOffset,width,length+arrowOffset,"stroke-width:1px;stroke:#000000;fill:#ffffff");
+        String combine = svgArrows.addSvg(svg.getCarportSvg()).toString();
+
+        ctx.attribute("svg", svg.toString());
+        ctx.render("showorder.html");
     }
 }

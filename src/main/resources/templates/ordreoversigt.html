@@ -7,8 +7,9 @@
 <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 
-<body>
+<body class="noBackground">
 <p> Ordre Info</p>
+<div class="ordreoversigt">
 <table class="order-table">
     <thead>
     <tr>
@@ -34,21 +35,18 @@
         <td th:text="${order.price}">price</td>
         <td th:text="${order.status}">status</td>
 
-
-
-        <td>
-
         <td>
         <form method="post" >
             <button class ="linkbutton centered-button" th:if="${order.status == 'Afventer betaling'}" type="submit" formaction="/pay"> Betal</button>
             <input type="hidden" name="orderId" th:value="${order.orderId}"/>
         </form>
         </td>
-
-        <!-- VI MANGLER SÆLGER DER GIVER RABAT EVT. PÅ EN ANDEN HTML SIDE -->
+        <form method="post" >
+        <button formaction="/showorder">Show order</button>
+        </form>
     </tr>
 </table>
-<div class="page">
+
 
 </div>
 <div th:if="${session.currentUser != null}">
