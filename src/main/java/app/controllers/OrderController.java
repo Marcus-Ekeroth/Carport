@@ -115,15 +115,17 @@ public class OrderController {
         int width = ctx.sessionAttribute("carportWidth");
         Locale.setDefault(new Locale("US"));
         CarportSvg svg = new CarportSvg(width,length);
-        Svg svgArrows = new Svg(0,0,"0 0 1000 1000","auto");
+        Svg outerSvg = new Svg(0,0,"0 0 1000 1000","auto");
+        // tilføj pile til outerSvg
+        outerSvg.addArrow(20,20,20,500,"Stroke: #000000");
+        outerSvg.addArrow(20,500,550,500,"Stroke:#000000");
+        // tegn carport i Svg objektet
+        // indsæt Svg i outerSvg:
+        outerSvg.addSvg(svg.getCarportSvg());
 
-        int arrowOffset = 10;
-        int rotate = 90;
-        svgArrows.addArrow(width+arrowOffset,length,width+arrowOffset,length,"stroke-width:1px;stroke:#000000;fill:#ffffff");
-        svgArrows.addArrow(width,length+arrowOffset,width,length+arrowOffset,"stroke-width:1px;stroke:#000000;fill:#ffffff");
-        String combine = svgArrows.addSvg(svg.getCarportSvg()).toString();
 
-        ctx.attribute("svg", svg.toString());
+
+        ctx.attribute("svg", outerSvg.toString());
         ctx.render("showorder.html");
     }
 }

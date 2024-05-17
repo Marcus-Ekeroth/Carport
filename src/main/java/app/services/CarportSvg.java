@@ -1,5 +1,7 @@
 package app.services;
 
+import app.controllers.OrderController;
+
 public class CarportSvg {
     private int width;
     private int length;
@@ -9,10 +11,11 @@ public class CarportSvg {
     public CarportSvg(int width, int length) {
         this.width = width;
         this.length = length;
-        carportSvg = new Svg(0, 0, "0 0 855 690", "50%");
+        carportSvg = new Svg(40, 40, "0 0 855 690", "50%");
         carportSvg.addRectangle(0, 0, 600, 780, "stroke-width:1px; stroke: #000000; fill: #ffffff");
         addBeams();
         addRafters();
+        addArrow();
 
     }
 
@@ -32,6 +35,8 @@ public class CarportSvg {
     }
     public void addArrow(){
 
+        carportSvg.addArrow(200,200,100,100,"stroke:#000000;");
+        carportSvg.addArrow(500,400,700,400,"stroke:#000000;");
     }
 
     @Override
