@@ -111,6 +111,7 @@ public class OrderController {
         OrderMapper.changeStatus(orderId, 3, connectionPool);
 
         ctx.attribute("payedOrder",OrderMapper.getOrderById(orderId, connectionPool));
+        ctx.attribute("orderlines", BomMapper.getBomlistById(orderId,connectionPool).getOrderLines());
         ctx.render("kvittering.html");
     }
 
