@@ -24,8 +24,8 @@ public class OrderController {
         app.post("/createOrder", ctx -> createOrder(ctx, connectionPool));
         app.post("/updatePrice", ctx -> updatePrice(ctx, connectionPool));
         app.post("/changeStatus", ctx -> changeStatus(ctx, connectionPool));
-        app.post("/pay", ctx -> pay(ctx,connectionPool));
-        app.post("/showSvg", ctx ->  showSvg(ctx,connectionPool));
+        app.post("/pay", ctx -> pay(ctx, connectionPool));
+        app.post("/showSvg", ctx -> showSvg(ctx, connectionPool));
 
     }
 
@@ -42,9 +42,10 @@ public class OrderController {
         ctx.attribute("orderList", OrderMapper.getAllOrders(connectionPool));
         ctx.render("admin.html");
     }
+
     private static void displayOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        User user = ctx.sessionAttribute ("currentUser");
-        ctx.attribute("orderUserList",OrderMapper.getUserOrder(user,connectionPool));
+        User user = ctx.sessionAttribute("currentUser");
+        ctx.attribute("orderUserList", OrderMapper.getUserOrder(user, connectionPool));
         ctx.render("ordreoversigt.html");
     }
 
@@ -54,8 +55,8 @@ public class OrderController {
         try {
             int width = Integer.parseInt(ctx.formParam("carportWidth"));
             int length = Integer.parseInt(ctx.formParam("carportLength"));
-            ctx.sessionAttribute("carportWidth",width);
-            ctx.sessionAttribute("carportLength",length);
+            ctx.sessionAttribute("carportWidth", width);
+            ctx.sessionAttribute("carportLength", length);
             String roof = ctx.formParam("carportRoof");
             String shippingAddress = (ctx.formParam("ShippingAddress"));
             List<Material> woodList = MaterialMapper.getAllWood(connectionPool);
@@ -107,27 +108,34 @@ public class OrderController {
 
         OrderMapper.changeStatus(orderId, 3, connectionPool);
 
-        ctx.attribute("payedOrder",OrderMapper.getOrderById(orderId, connectionPool));
+        ctx.attribute("payedOrder", OrderMapper.getOrderById(orderId, connectionPool));
         ctx.render("receipt.html");
     }
+
     private static void showSvg(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        int width = Integer.parseInt(ctx.formParam("carportWidth"));
-        int length = Integer.parseInt(ctx.formParam("carportLength"));
-        ctx.sessionAttribute("carportWidth",width);
-        ctx.sessionAttribute("carportLength",length);
-        Locale.setDefault(new Locale("US"));
-        CarportSvg svg = new CarportSvg(width,length);
-        Svg outerSvg = new Svg(0,0,"0 0 1000 1000","auto");
-        // tilføj pile til outerSvg
-        outerSvg.addArrow(20,20,20,500,"Stroke: #000000");
-        outerSvg.addArrow(20,500,550,500,"Stroke:#000000");
-        // tegn carport i Svg objektet
-        // indsæt Svg i outerSvg:
-        outerSvg.addSvg(svg.getCarportSvg());
+        try {
+            int width = Integer.parseInt(ctx.formParam("carportWidth"));
+            int length = Integer.parseInt(ctx.formParam("carportLength"));
+            ctx.sessionAttribute("carportWidth", width);
+            ctx.sessionAttribute("carportLength", length);
+            Locale.setDefault(new Locale("US"));
+            CarportSvg svg = new CarportSvg(width, length);
+            Svg outerSvg = new Svg(0, 0, "0 0 1000 1000", "auto");
+            // tilføj pile til outerSvg
+            outerSvg.addArrow(20, 20, 20, 500, "Stroke: #000000");
+            outerSvg.addArrow(20, 500, 550, 500, "Stroke:#000000");
+            // tegn carport i Svg objektet
+            // indsæt Svg i outerSvg:
+            outerSvg.addSvg(svg.getCarportSvg());
 
 
+            ctx.attribute("svg", outerSvg.toString());
+            ctx.render("showsvg.html");
 
-        ctx.attribute("svg", outerSvg.toString());
-        ctx.render("showsvg.html");
+        } catch (NumberFormatException e) {
+            ctx.attribute("message", "Udfyld alle felterne");
+            ctx.render("carportcreation.html");
+
+        }
     }
 }
