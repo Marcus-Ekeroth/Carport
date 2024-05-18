@@ -1,9 +1,7 @@
 package app.controllers;
 
-import app.entities.Material;
-import app.entities.Order;
-import app.entities.Material;
-import app.entities.User;
+
+import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
 import app.services.CarportSvg;
