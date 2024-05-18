@@ -25,7 +25,7 @@ public class OrderController {
         app.post("/updatePrice", ctx -> updatePrice(ctx, connectionPool));
         app.post("/changeStatus", ctx -> changeStatus(ctx, connectionPool));
         app.post("/pay", ctx -> pay(ctx, connectionPool));
-        app.post("/showSvg", ctx -> showSvg(ctx, connectionPool));
+        app.post("/showCarport", ctx -> showCarport(ctx, connectionPool));
 
     }
 
@@ -112,22 +112,19 @@ public class OrderController {
         ctx.render("receipt.html");
     }
 
-    private static void showSvg(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void showCarport(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         try {
             int width = Integer.parseInt(ctx.formParam("carportWidth"));
             int length = Integer.parseInt(ctx.formParam("carportLength"));
-            ctx.sessionAttribute("carportWidth", width);
-            ctx.sessionAttribute("carportLength", length);
             Locale.setDefault(new Locale("US"));
             CarportSvg svg = new CarportSvg(width, length);
             Svg outerSvg = new Svg(0, 0, "0 0 1000 1000", "auto");
             // tilføj pile til outerSvg
-            outerSvg.addArrow(20, 20, 20, 500, "Stroke: #000000");
-            outerSvg.addArrow(20, 500, 550, 500, "Stroke:#000000");
+            outerSvg.addArrow(20, 20, 20, width+20, "Stroke: #000000");
+            outerSvg.addArrow(20, width+20, length+20, width+20, "Stroke:#000000");
             // tegn carport i Svg objektet
             // indsæt Svg i outerSvg:
             outerSvg.addSvg(svg.getCarportSvg());
-
 
             ctx.attribute("svg", outerSvg.toString());
             ctx.render("showsvg.html");
