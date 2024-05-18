@@ -1,5 +1,7 @@
 package app.entities;/* @auther: Frederik Dupont */
 
+import java.util.Objects;
+
 public class User {
     private int userId;
     private String name;
@@ -109,5 +111,17 @@ public class User {
                 ", phonenumber=" + phonenumber +
                 ", role='" + role + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+        return getUserId() == user.getUserId() && getPostalcode() == user.getPostalcode() && getPhonenumber() == user.getPhonenumber() && Objects.equals(getName(), user.getName()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getAddress(), user.getAddress()) && Objects.equals(getCity(), user.getCity()) && Objects.equals(getRole(), user.getRole());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUserId(), getName(), getEmail(), getPassword(), getAddress(), getPostalcode(), getCity(), getPhonenumber(), getRole());
     }
 }
