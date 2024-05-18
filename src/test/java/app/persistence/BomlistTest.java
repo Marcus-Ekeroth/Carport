@@ -2,13 +2,8 @@ package app.persistence;
 
 import app.entities.Material;
 import app.exceptions.DatabaseException;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,32 +22,32 @@ class BomlistTest {
 
 
     @Test
-    void addStolpe() {
+    void addPoles() {
         Bomlist bomlist = new Bomlist();
-        bomlist.addStolpe(440, woodList);
-        bomlist.addStolpe(441, woodList);
+        bomlist.addPoles(440, woodList);
+        bomlist.addPoles(441, woodList);
 
         assertEquals(4,bomlist.getOrderLines().get(0).getAmount());
         assertEquals(6,bomlist.getOrderLines().get(1).getAmount());
     }
 
     @Test
-    void addRem() {
+    void addBeams() {
         Bomlist bomlist = new Bomlist();
         //test 1
-        bomlist.addRem(240, woodList);
+        bomlist.addBeams(240, woodList);
         //test 2
-        bomlist.addRem(300, woodList);
+        bomlist.addBeams(300, woodList);
         //test 3
-        bomlist.addRem(480, woodList);
+        bomlist.addBeams(480, woodList);
         //test 4
-        bomlist.addRem(540, woodList);
+        bomlist.addBeams(540, woodList);
         //test 5
-        bomlist.addRem(600, woodList);
+        bomlist.addBeams(600, woodList);
         //test 6
-        bomlist.addRem(720, woodList);
+        bomlist.addBeams(720, woodList);
         //test 7
-        bomlist.addRem(780, woodList);
+        bomlist.addBeams(780, woodList);
 
         //test 1
         assertEquals(1,bomlist.getOrderLines().get(0).getAmount());
@@ -83,15 +78,15 @@ class BomlistTest {
     }
 
     @Test
-    void addSpær() {
+    void addRafters() {
         Bomlist bomlist = new Bomlist();
-        bomlist.addSpær(240, 480, woodList);
-        bomlist.addSpær(540, 481, woodList);
+        bomlist.addRafters(240, 480, woodList);
+        bomlist.addRafters(540, 481, woodList);
 
-        assertEquals(4,bomlist.getOrderLines().get(0).getAmount());
+        assertEquals(5,bomlist.getOrderLines().get(0).getAmount());
         assertEquals(480,bomlist.getOrderLines().get(0).getMaterial().getLength());
 
-        assertEquals(9,bomlist.getOrderLines().get(1).getAmount());
+        assertEquals(10,bomlist.getOrderLines().get(1).getAmount());
         assertEquals(600,bomlist.getOrderLines().get(1).getMaterial().getLength());
     }
 
@@ -116,8 +111,8 @@ class BomlistTest {
         //1 spær til rem
         totalPrice += spær.getPrice()*(spær.getLength()/100);
 
-        //4 spær over rem
-        totalPrice += 4*spær.getPrice()*(spær.getLength()/100);
+        //5 spær over rem
+        totalPrice += 5*spær.getPrice()*(spær.getLength()/100);
 
         assertEquals(totalPrice, bomlist.calculatePrice(240, 240, woodList));
     }
