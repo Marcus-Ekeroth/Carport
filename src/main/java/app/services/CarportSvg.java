@@ -41,8 +41,8 @@ public class CarportSvg {
             carportSvg.addRectangle(length - 30, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
             carportSvg.addRectangle(length - 30, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
 
-            carportSvg.addRectangle((100+length - 30)/2, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle((100+length - 30)/2, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle((length - 30-100)/2+100, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle((length - 30-100)/2+100, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
 
         }else if(length<=3*maxStolpeDis+extraSpaceFront+extraSpaceBehind){
             carportSvg.addRectangle(100, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
@@ -50,10 +50,10 @@ public class CarportSvg {
             carportSvg.addRectangle(length - 30, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
             carportSvg.addRectangle(length - 30, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
 
-            carportSvg.addRectangle((100+length - 30)/3, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle((100+length - 30)/3, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle(2*(100+length - 30)/3, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle(2*(100+length - 30)/3, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle((length - 30-100)/3+100, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle((length - 30-100)/3+100, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(2*(length - 30-100)/3+100, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(2*(length - 30-100)/3+100, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
         }
 
     }
