@@ -1,12 +1,18 @@
 package app.controllers;
 
-import app.entities.*;
+import app.entities.Material;
+import app.entities.Order;
+import app.entities.Material;
+import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
+import app.services.CarportSvg;
+import app.services.Svg;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
 import java.util.List;
+import java.util.Locale;
 
 import static app.persistence.OrderMapper.createOrder;
 
@@ -20,6 +26,7 @@ public class OrderController {
         app.post("/changeStatus", ctx -> changeStatus(ctx, connectionPool));
         app.post("pay", ctx -> pay(ctx,connectionPool));
         app.post("deleteOrder", ctx -> deleteOrder(ctx, connectionPool));
+        app.post("/showCarport", ctx -> showCarport(ctx, connectionPool));
 
     }
 
@@ -36,9 +43,10 @@ public class OrderController {
         ctx.attribute("orderList", OrderMapper.getAllOrders(connectionPool));
         ctx.render("admin.html");
     }
+
     private static void displayOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        User user = ctx.sessionAttribute ("currentUser");
-        ctx.attribute("orderUserList",OrderMapper.getUserOrder(user,connectionPool));
+        User user = ctx.sessionAttribute("currentUser");
+        ctx.attribute("orderUserList", OrderMapper.getUserOrder(user, connectionPool));
         ctx.render("ordreoversigt.html");
     }
 
@@ -113,6 +121,30 @@ public class OrderController {
         ctx.attribute("payedOrder",OrderMapper.getOrderById(orderId, connectionPool));
         ctx.attribute("orderlines", BomMapper.getBomlistById(orderId,connectionPool).getOrderLines());
         ctx.render("kvittering.html");
+    }
+
+    private static void showCarport(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        try {
+            int width = Integer.parseInt(ctx.formParam("carportWidth"));
+            int length = Integer.parseInt(ctx.formParam("carportLength"));
+            Locale.setDefault(new Locale("US"));
+            CarportSvg svg = new CarportSvg(width, length);
+            Svg outerSvg = new Svg(0, 0, "0 0 1000 1000", "auto");
+            // tilføj pile til outerSvg
+            outerSvg.addArrow(20, 20, 20, width+20, "Stroke: #000000");
+            outerSvg.addArrow(20, width+20, length+20, width+20, "Stroke:#000000");
+            // tegn carport i Svg objektet
+            // indsæt Svg i outerSvg:
+            outerSvg.addSvg(svg.getCarportSvg());
+
+            ctx.attribute("svg", outerSvg.toString());
+            ctx.render("showsvg.html");
+
+        } catch (NumberFormatException e) {
+            ctx.attribute("message", "Udfyld alle felterne");
+            ctx.render("carportcreation.html");
+
+        }
     }
 
     private static void deleteOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException{

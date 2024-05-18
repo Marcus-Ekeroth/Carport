@@ -70,6 +70,9 @@
     <p>Leverings adresse</p>
     <textarea name="ShippingAddress"> </textarea>
 
+    <div>
+        <button formaction="/showCarport">Vis tegning</button>
+    </div>
     <div th:if="${session.currentUser != null}">
     <button class="linkbutton" type="submit" formaction="/createOrder">Bestil tilbud</button>
     </div>
