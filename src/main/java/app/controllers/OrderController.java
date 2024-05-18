@@ -118,7 +118,7 @@ public class OrderController {
 
         ctx.attribute("payedOrder",OrderMapper.getOrderById(orderId, connectionPool));
         ctx.attribute("orderlines", BomMapper.getBomlistById(orderId,connectionPool).getOrderLines());
-        ctx.render("kvittering.html");
+        ctx.render("receipt.html");
     }
 
     private static void showCarport(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
