@@ -13,15 +13,54 @@ public class CarportSvg {
         this.length = length;
         carportSvg = new Svg(40, 40, "0 0 855 690", "50%");
         carportSvg.addRectangle(0, 0, width, length, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+
         addBeams();
+        addPoles();
         addRafters();
+
+
         //addArrow();
 
     }
+    private void addPoles() {
+        int maxStolpeDis = 310;
+        int extraSpaceFront = 100;
+        int extraSpaceBehind = 30;
+        if(length<=maxStolpeDis+2*extraSpaceBehind) {
+            carportSvg.addRectangle(30, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(30, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(length - 30, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(length - 30, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+        }else if(length<=maxStolpeDis+extraSpaceFront+extraSpaceBehind){
+            carportSvg.addRectangle(100, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(100, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(length - 30, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(length - 30, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+        }else if(length<=2*maxStolpeDis+extraSpaceFront+extraSpaceBehind){
+            carportSvg.addRectangle(100, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(100, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(length - 30, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(length - 30, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
 
+            carportSvg.addRectangle((100+length - 30)/2, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle((100+length - 30)/2, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+
+        }else if(length<=3*maxStolpeDis+extraSpaceFront+extraSpaceBehind){
+            carportSvg.addRectangle(100, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(100, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(length - 30, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(length - 30, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+
+            carportSvg.addRectangle((100+length - 30)/3, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle((100+length - 30)/3, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(2*(100+length - 30)/3, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(2*(100+length - 30)/3, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+        }
+
+    }
     private void addBeams() {
-        carportSvg.addRectangle(0, 0, 4.5, length, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-        carportSvg.addRectangle(0, width, 4.5, length, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+        carportSvg.addRectangle(0, 35, 4.5, length, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+        carportSvg.addRectangle(0, width-35, 4.5, length, "stroke-width:1px; stroke: #000000; fill: #ffffff");
 
     }
     private void addRafters(){
