@@ -21,7 +21,7 @@ public class Svg {
             "             marker-end=\"url(#endArrow)\" />;";
 
     private static final String SVG_RECT_TEMPLATE = "<rect x=\"%.2f\" y=\"%.2f\" height=\"%.2f\" width=\"%.2f\" style=\"%s\" />";
-    private static final String SVG_TEXT_TEMPLATE = "<text style=\"text-anchor: middle\" transform=\"translate(%d,%d) rotate(%d)\">%s cm</text>\n";
+    private static final String SVG_TEXT_TEMPLATE = "<text style=\"text-anchor: middle\" transform=\"translate(%f,%f) rotate(%d)\">%s cm</text>\n";
 
     public Svg(int x, int y, String viewBox, String width){
         svg.append(String.format(SVG_TEMPLATE,x,y,viewBox,width));
@@ -37,9 +37,7 @@ public class Svg {
 
     }
 
-
-    public void addText(int x, int y, int rotation, String text){}
-    public void addText(int x1, int y1, int rotation1, String Text) {
+    public void addText(double x1, double y1, int rotation1, String Text) {
         svg.append(String.format(SVG_TEXT_TEMPLATE, x1, y1, rotation1, Text));
     }
     public String addSvg(Svg innerSvg){

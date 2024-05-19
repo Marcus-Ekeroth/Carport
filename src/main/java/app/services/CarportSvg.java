@@ -11,14 +11,15 @@ public class CarportSvg {
     public CarportSvg(int width, int length) {
         this.width = width;
         this.length = length;
-        carportSvg = new Svg(40, 40, "0 0 855 690", "75%");
+        carportSvg = new Svg(40, 40, "0 0 1000 1000", "75%");
         carportSvg.addRectangle(0, 0, width, length, "stroke-width:1px; stroke: #000000; fill: #ffffff");
 
 
         addBeams();
         addPoles();
         addRafters();
-        addArrow();
+        //addArrow();
+        //addText();
 
 
     }
@@ -82,6 +83,8 @@ public class CarportSvg {
         carportSvg.addArrow(0,0,200,10,"fill: #000000;");
     }
     public void addText() {
+        carportSvg.addText(-50, width / 2, -90, "Bredde: "+width);
+        carportSvg.addText(length / 2, width+50, 0, "Længde: "+length);
     }
 
     @Override
