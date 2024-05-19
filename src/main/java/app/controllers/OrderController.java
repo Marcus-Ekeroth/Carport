@@ -128,11 +128,10 @@ public class OrderController {
             Locale.setDefault(new Locale("US"));
             CarportSvg svg = new CarportSvg(width, length);
             Svg outerSvg = new Svg(0, 0, "0 0 1000 1000", "auto");
-            // tilføj pile til outerSvg
-            outerSvg.addArrow(20, 20, 20, width+20, "Stroke: #000000");
-            outerSvg.addArrow(20, width+20, length+20, width+20, "Stroke:#000000");
-            // tegn carport i Svg objektet
-            // indsæt Svg i outerSvg:
+            outerSvg.addLine(20, 20, 20, width+20, "Stroke: #000000");
+            outerSvg.addLine(20, width+20, length+20, width+20, "Stroke:#000000");
+            outerSvg.addText(15, width / 2, -90, "Bredde: "+width);
+            outerSvg.addText(length / 2, width+40, 0, "Længde: "+length);
             outerSvg.addSvg(svg.getCarportSvg());
 
             ctx.attribute("svg", outerSvg.toString());

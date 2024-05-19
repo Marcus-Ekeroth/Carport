@@ -14,10 +14,11 @@ public class CarportSvg {
         carportSvg = new Svg(40, 40, "0 0 855 690", "75%");
         carportSvg.addRectangle(0, 0, width, length, "stroke-width:1px; stroke: #000000; fill: #ffffff");
 
-        //addArrow();
+
         addBeams();
         addPoles();
         addRafters();
+        addArrow();
 
 
     }
@@ -75,10 +76,12 @@ public class CarportSvg {
     public Svg getCarportSvg() {
         return carportSvg;
     }
+    public void addLine(){
+    }
     public void addArrow(){
-
-        carportSvg.addArrow(200,200,100,100,"stroke:#000000;");
-        carportSvg.addArrow(500,400,700,400,"stroke:#000000;");
+        carportSvg.addArrow(0,0,200,10,"fill: #000000;");
+    }
+    public void addText() {
     }
 
     @Override

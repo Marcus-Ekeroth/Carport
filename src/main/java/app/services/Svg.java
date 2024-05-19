@@ -22,6 +22,7 @@ public class Svg {
             "            \" marker-end: url(#endArrow);\" />";
 
     private static final String SVG_RECT_TEMPLATE = "<rect x=\"%.2f\" y=\"%.2f\" height=\"%.2f\" width=\"%.2f\" style=\"%s\" />";
+    private static final String SVG_TEXT_TEMPLATE = "<text style=\"text-anchor: middle\" transform=\"translate(%d,%d) rotate(%d)\">%s cm</text>\n";
 
     public Svg(int x, int y, String viewBox, String width){
         svg.append(String.format(SVG_TEMPLATE,x,y,viewBox,width));
@@ -30,12 +31,16 @@ public class Svg {
     public void addRectangle(double x, double y, double height, double width, String style){
         svg.append(String.format(SVG_RECT_TEMPLATE, x, y, height, width, style));
     }
-    public void addLine(int x1, int y1, int x2, int y2, String style){}
-    public void addArrow(int x1, int y1, int x2, int y2, String style){
+    public void addLine(int x1, int y1, int x2, int y2, String style){
         svg.append(String.format(SVG_LINE_TEMPLATE, x1, y1, x2, y2, style));
+    }
+    public void addArrow(int x1, int y1, int x2, int y2, String style){
+    svg.append(String.format(SVG_LINE_TEMPLATE, x1, y1, x2, y2, style));
 
     }
-    public void addText(int x, int y, int rotation, String text){}
+    public void addText(int x1, int y1, int rotation1, String Text) {
+        svg.append(String.format(SVG_TEXT_TEMPLATE, x1, y1, rotation1, Text));
+    }
     public String addSvg(Svg innerSvg){
       return svg.append(innerSvg.toString()).toString();
 
