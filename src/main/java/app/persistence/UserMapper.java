@@ -98,7 +98,7 @@ public class UserMapper {
         }
         catch (SQLException e)
         {
-            throw new DatabaseException("Fejl!!!!", e.getMessage());
+            throw new DatabaseException("Fejl i visning af users", e.getMessage());
         }
         return userList;
     }

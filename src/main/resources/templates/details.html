@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
-<body>
+<body class="noBackground">
 <table class="order-table">
     <thead>
     <tr>
@@ -47,10 +47,45 @@
         <td>
 
         </td>
-        <!-- VI MANGLER SÆLGER DER GIVER RABAT EVT. PÅ EN ANDEN HTML SIDE -->
     </tr>
     </tbody>
 </table>
+
+<h2>Stykliste:</h2>
+<table class="order-table">
+    <thead>
+    <tr>
+        <th>Materiale ID</th>
+        <th>Navn</th>
+        <th>Enhed</th>
+        <th>Beskrivelse</th>
+        <th>Pris</th>
+        <th>Længde</th>
+        <th>Materiale Variant ID</th>
+        <th>Mængde</th>
+
+
+
+    </tr>
+    </thead>
+
+    <tr th:each="bom : ${orderlines}">
+        <td th:text="${bom.getMaterial().getMaterialId()}">material id</td>
+        <td th:text="${bom.getMaterial().getName()}">name</td>
+        <td th:text="${bom.getMaterial().getUnit()}">unit</td>
+        <td th:text="${bom.getMaterial().getDescription()}">description</td>
+        <td th:text="${bom.getMaterial().getPrice()}">price</td>
+        <td th:text="${bom.getMaterial().getLength()}">length</td>
+        <td th:text="${bom.getMaterial().getMaterialVariantId()}">material variant id</td>
+        <td th:text="${bom.getAmount()}">amount</td>
+
+        <td>
+
+    </tr>
+</table>
+
+
+
 <p>Originale pris</p>
 <p><span th:text="${oldprice}"></span></p>
 <p>Nye pris</p>
@@ -65,7 +100,11 @@
 
 
 <form method="post">
-    <button formaction="/logout" class="linkbutton" type="submit">Log out</button>
+    <button formaction="/logout" class="linkbutton" type="submit">Log ud</button>
+</form>
+
+<form class="generic-form" method="post">
+    <button type="submit" formaction="/admin">Tilbage til oversigt</button>
 </form>
 
 </body>

@@ -13,7 +13,7 @@ import java.util.List;
 public class MaterialMapper {
     public static List<Material> getAllWood(ConnectionPool connectionPool) throws DatabaseException {
         List<Material> materialList = new ArrayList<>();
-        String sql = "SELECT material.material_id, material.name, material.unit, material.description, material.price, material_variant.length FROM material INNER JOIN material_variant ON material.material_id = material_variant.material_id\n" +
+        String sql = "SELECT material.material_id, material.name, material.unit, material.description, material.price, material_variant.length, material_variant.material_variant_id FROM material INNER JOIN material_variant ON material.material_id = material_variant.material_id\n" +
                 "ORDER BY material.material_id ASC ";
         try (
                 Connection connection = connectionPool.getConnection();
@@ -28,7 +28,8 @@ public class MaterialMapper {
                 String description = rs.getString("description");
                 int price = rs.getInt("price");
                 int length = rs.getInt("length");
-                materialList.add(new Material(materialId, name, unit, description, price, length));
+                int materialVariantId = rs.getInt("material_variant_id");
+                materialList.add(new Material(materialId, name, unit, description, price, length, materialVariantId));
             }
         } catch (SQLException e) {
             throw new DatabaseException("Database fejl", e.getMessage());

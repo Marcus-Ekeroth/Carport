@@ -19,11 +19,11 @@ public class Bomlist {
     }
 
 
-    public void addStolpe(int carportLength, List<Material> woodList) {
-        Material stolpe = null;
+    public void addPoles(int carportLength, List<Material> woodList) {
+        Material pole = null;
         for (Material wood : woodList) {
             if (wood.getMaterialId() == 6) {
-                stolpe = wood;
+                pole = wood;
             }
         }
 
@@ -34,18 +34,20 @@ public class Bomlist {
         int amount = 4;
         if (carportLength > (maxStolpeDis + extraSpaceFront + extraSpaceBehind)) {
             amount = 6;
+        }else if(carportLength > (2*maxStolpeDis + extraSpaceFront + extraSpaceBehind)){
+            amount = 8;
         }
 
-        addToBomlist(new Bom(stolpe, amount));
+        addToBomlist(new Bom(pole, amount));
 
     }
 
-    public void addRem(int carportLength, List<Material> woodList) {
-        List<Material> spær = new ArrayList<>();
+    public void addBeams(int carportLength, List<Material> woodList) {
+        List<Material> beams = new ArrayList<>();
 
         for (Material wood : woodList) {
             if (wood.getMaterialId() == 5) {
-                spær.add(wood);
+                beams.add(wood);
             }
         }
         int amount480 = 0;
@@ -70,52 +72,48 @@ public class Bomlist {
         }
 
 
-        if (spær.get(0).getLength() == 480) {
+        if (beams.get(0).getLength() == 480) {
 
             if (amount480 > 0) {
-                addToBomlist(new Bom(spær.get(0), amount480));
+                addToBomlist(new Bom(beams.get(0), amount480));
             }
             if (amount600 > 0) {
-                addToBomlist(new Bom(spær.get(1), amount600));
+                addToBomlist(new Bom(beams.get(1), amount600));
             }
-        } else if (spær.get(0).getLength() == 600) {
+        } else if (beams.get(0).getLength() == 600) {
 
             if (amount600 > 0) {
-                addToBomlist(new Bom(spær.get(0), amount600));
+                addToBomlist(new Bom(beams.get(0), amount600));
             }
             if (amount480 > 0) {
-                addToBomlist(new Bom(spær.get(1), amount480));
+                addToBomlist(new Bom(beams.get(1), amount480));
             }
         }
 
     }
 
-    public void addSpær(int carportLength,int carportWidth, List<Material> woodList){
-        List<Material> spær = new ArrayList<>();
+    public void addRafters(int carportLength, int carportWidth, List<Material> woodList){
+        List<Material> beams = new ArrayList<>();
         for (Material wood : woodList) {
             if (wood.getMaterialId() == 5) {
-                spær.add(wood);
+                beams.add(wood);
             }
         }
 
-        int rowAmount = 4;
-
-        while (rowAmount*60<carportLength && rowAmount!=13){
-            rowAmount++;
-        }
+        int rowAmount = (int) Math.ceil(carportLength/60)+1;
 
         //Antagelse: Kun et bræde per række. Dette er for at gøre problemet lidt mere simpelt til at starte med.
         if(carportWidth<=480){
-            if (spær.get(0).getLength() == 480) {
-                addToBomlist(new Bom(spær.get(0), rowAmount));
-            } else if (spær.get(1).getLength() == 480) {
-                addToBomlist(new Bom(spær.get(1), rowAmount));
+            if (beams.get(0).getLength() == 480) {
+                addToBomlist(new Bom(beams.get(0), rowAmount));
+            } else if (beams.get(1).getLength() == 480) {
+                addToBomlist(new Bom(beams.get(1), rowAmount));
             }
         }else if(carportWidth<=600){
-            if (spær.get(0).getLength() == 600) {
-                addToBomlist(new Bom(spær.get(0), rowAmount));
-            } else if (spær.get(1).getLength() == 600) {
-                addToBomlist(new Bom(spær.get(1), rowAmount));
+            if (beams.get(0).getLength() == 600) {
+                addToBomlist(new Bom(beams.get(0), rowAmount));
+            } else if (beams.get(1).getLength() == 600) {
+                addToBomlist(new Bom(beams.get(1), rowAmount));
             }
         }
 
@@ -123,9 +121,9 @@ public class Bomlist {
 
     }
     public double calculatePrice(int carportLength,int carportWidth, List<Material> woodList){
-        addRem(carportLength,woodList);
-        addSpær(carportLength,carportWidth,woodList);
-        addStolpe(carportLength,woodList);
+        addBeams(carportLength,woodList);
+        addRafters(carportLength,carportWidth,woodList);
+        addPoles(carportLength,woodList);
         double totalPrice = 0.0;
         for (Bom bom: bomlist) {
         Material material = bom.getMaterial();

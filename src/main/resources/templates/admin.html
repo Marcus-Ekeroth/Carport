@@ -8,7 +8,7 @@
     <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 
-<body>
+<body class="noBackground">
 <p><span th:text="${session.currentUser.email}"></span></p>
 <h1>ADMIN PAGE</h1>
 
@@ -40,13 +40,9 @@
         <td th:text="${order.price}">price</td>
         <td th:text="${order.status}">status</td>
 
-
-
-        <td>
-
         <td>
             <form class="generic-form" method="post">
-                <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/details">Details</button>
+                <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/details">Detaljer</button>
                 <input type="hidden" name="oldprice" th:value="${order.price}" />
             </form>
         </td>
@@ -56,11 +52,13 @@
 </table>
 
 
-
+<div>
+    <p th:text="${message}"></p>
+</div>
 
 
 <form method="post">
-    <button formaction="/logout" class="linkbutton" type="submit">Log out</button>
+    <button formaction="/logout" class="linkbutton" type="submit">Log ud</button>
 </form>
 
 </body>

@@ -30,7 +30,64 @@ h1 {
      border: none;
      padding: 0;
 }
+body:not(.noBackground){
 
+    background-image: url("../images/baggrundFog.webp");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    color: black; /*lyseblå*/
+
+}
+th, td {
+    padding: 5px;
+    border: 1px solid blue;
+    font-size: 16px; /* Increase font size */
+}
+.remove-button-cell {
+    border: none; /* Fjern kanten omkring cellen */
+    padding: 0; /* Fjern eventuel padding, der kan resultere i ekstra plads omkring knappen */
+}
+
+.CarportCreation, .ordreoversigt {
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent hvid baggrund */
+    padding: 20px; /* Indre margen */
+    border-radius: 10px; /* Runde hjørner */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Let skygge for at give dybde */
+    max-width: 600px; /* Maksimal bredde */
+    margin: 50px auto; /* Center formularen og giv lidt afstand til toppen */
+    text-align: left; /* Juster tekst til venstre */
+}
+
+.order-table {
+    width: 100%; /* Gør tabellen bred */
+    border-collapse: collapse; /* Fjern mellemrum mellem celler */
+}
+
+
+
+.linkbutton.centered-button {
+    display: block;
+    margin: 70px auto;
+    width: 150px;
+    padding: 5px;
+    background-color: #369; /* Knapfarve */
+    color: white; /* Tekstfarve */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.linkbutton.centered-button:hover {
+    background-color: #258; /* Mørkere farve ved hover */
+}
+
+.carport-svg-topview{
+max-width: 1600px;
+    max-height: 1600px;
+}
 
 
 

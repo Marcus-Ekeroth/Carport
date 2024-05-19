@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="dk">
 
+<head>
 <title>Order</title>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
@@ -68,6 +70,9 @@
     <p>Leverings adresse</p>
     <textarea name="ShippingAddress"> </textarea>
 
+    <div>
+        <button formaction="/showCarport">Vis tegning</button>
+    </div>
     <div th:if="${session.currentUser != null}">
     <button class="linkbutton" type="submit" formaction="/createOrder">Bestil tilbud</button>
     </div>
@@ -82,6 +87,12 @@
 <div th:if="${session.currentUser != null}">
     <form class="CarportCreation" method="post">
         <button formaction="/logout" class="linkbutton centered-button" type="submit">Log ud</button>
+    </form>
+</div>
+
+<div th:if="${session.currentUser != null}">
+    <form  class="CarportCreation" method="post">
+        <button type="submit" name="buttonValue" formaction="/mysite" class="linkbutton centered-button">Min side</button>
     </form>
 </div>
 
