@@ -19,6 +19,8 @@ public class Svg {
     private static final String SVG_LINE_TEMPLATE = "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\"%s\"; +\n" +
             "             marker-start=\"url(#beginArrow)\"; +\n" +
             "             marker-end=\"url(#endArrow)\" />;";
+    private static final String SVG_DASHED_LINE_TEMPLATE = "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\"%s\"; stroke-dasharray=\"5.5\" />;";
+
 
     private static final String SVG_RECT_TEMPLATE = "<rect x=\"%.2f\" y=\"%.2f\" height=\"%.2f\" width=\"%.2f\" style=\"%s\" />";
     private static final String SVG_TEXT_TEMPLATE = "<text style=\"text-anchor: middle\" transform=\"translate(%f,%f) rotate(%d)\">%s cm</text>\n";
@@ -30,7 +32,9 @@ public class Svg {
     public void addRectangle(double x, double y, double height, double width, String style){
         svg.append(String.format(SVG_RECT_TEMPLATE, x, y, height, width, style));
     }
-    public void addLine(int x1, int y1, int x2, int y2, String style){}
+    public void addDashedLine(double x1, double y1, double x2, double y2, String style){
+        svg.append(String.format(SVG_DASHED_LINE_TEMPLATE, x1, y1, x2, y2, style));
+    }
     public void addArrow(double x1, double y1, double x2, double y2, String style){
 
         svg.append(String.format(SVG_LINE_TEMPLATE, x1, y1, x2, y2, style));

@@ -7,6 +7,8 @@ public class CarportSvg {
     private int length;
     private Svg carportSvg;
 
+    private int spaceAmount;
+    private float spaceBetween;
 
     public CarportSvg(int width, int length) {
         this.width = width;
@@ -14,12 +16,15 @@ public class CarportSvg {
         carportSvg = new Svg(40, 40, "0 0 1000 1000", "75%");
         carportSvg.addRectangle(0, 0, width, length, "stroke-width:1px; stroke: #000000; fill: #ffffff");
 
+        spaceAmount = (int) Math.ceil(length/60);
+        spaceBetween = length/spaceAmount;
 
+        addLines();
         addBeams();
         addPoles();
         addRafters();
-        //addArrow();
-        //addText();
+
+
 
 
     }
@@ -65,9 +70,6 @@ public class CarportSvg {
 
     }
     private void addRafters(){
-        int spaceAmount = (int) Math.ceil(length/60);
-
-        float spaceBetween = length/spaceAmount;
 
         for (int i=0; i <=  spaceAmount; i++)
         {
@@ -77,14 +79,10 @@ public class CarportSvg {
     public Svg getCarportSvg() {
         return carportSvg;
     }
-    public void addLine(){
-    }
-    public void addArrow(){
-        carportSvg.addArrow(0,0,200,10,"fill: #000000;");
-    }
-    public void addText() {
-        carportSvg.addText(-50, width / 2, -90, "Bredde: "+width);
-        carportSvg.addText(length / 2, width+50, 0, "Længde: "+length);
+    public void addLines(){
+
+        carportSvg.addDashedLine(spaceBetween, 35, length-spaceBetween, width-35, "Stroke:#000000");
+        carportSvg.addDashedLine(spaceBetween, width-35, length-spaceBetween, 35, "Stroke:#000000");
     }
 
     @Override
