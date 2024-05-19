@@ -34,15 +34,11 @@ public class UserController {
     }
 
     private static void loggingon(Context ctx, ConnectionPool connectionPool) {
-
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
-
         try {
             User user = UserMapper.login(email, password, connectionPool);
             ctx.sessionAttribute("currentUser", user);
-
-
             if ("admin".equals(user.getRole())) {
                 admin(ctx, connectionPool);
             } else {
@@ -54,9 +50,7 @@ public class UserController {
                     displayOrder(ctx, connectionPool);
                 }
             }
-
         } catch (DatabaseException e) {
-
             ctx.attribute("message", e.getMessage());
             ctx.render("login.html");
         }
@@ -74,16 +68,11 @@ public class UserController {
             int postalcode = Integer.parseInt(ctx.formParam("postalcode"));
             String city = ctx.formParam("city");
             int phonenumber = Integer.parseInt(ctx.formParam("phonenumber"));
-
-
             // Validering af passwords - at de to matcher
             if (password1.equals(password2)) {
-
-
                 UserMapper.createuser(name, email, password1, address, postalcode, city, phonenumber, connectionPool);
-                ctx.attribute("message", "User created successfully.");
+                ctx.attribute("message", "Ny bruger lavet.");
                 ctx.render("index.html");
-
         } else{
             ctx.attribute("message", "Passwords matcher ikke");
             ctx.render("createuser.html");
@@ -100,14 +89,12 @@ public class UserController {
 
 
     public static void logout(Context ctx, ConnectionPool connectionPool) {
-
         // Invalidate session
         ctx.req().getSession().invalidate();
         ctx.redirect("/");
     }
 
     private static void admin(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-
         ctx.attribute("orderList", OrderMapper.getAllOrders(connectionPool));
         ctx.attribute("userList", UserMapper.getAllUsers(connectionPool));
         ctx.render("admin.html");
@@ -128,5 +115,4 @@ public class UserController {
         ctx.attribute("orderUserList",OrderMapper.getUserOrder(user,connectionPool));
         ctx.render("ordreoversigt.html");
     }
-
 }

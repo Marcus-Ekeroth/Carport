@@ -42,7 +42,7 @@
 
         <td>
             <form class="generic-form" method="post">
-                <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/details">Details</button>
+                <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/details">Detaljer</button>
                 <input type="hidden" name="oldprice" th:value="${order.price}" />
             </form>
         </td>
@@ -58,7 +58,7 @@
 
 
 <form method="post">
-    <button formaction="/logout" class="linkbutton" type="submit">Log out</button>
+    <button formaction="/logout" class="linkbutton" type="submit">Log ud</button>
 </form>
 
 </body>
