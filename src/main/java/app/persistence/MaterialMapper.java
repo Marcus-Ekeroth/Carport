@@ -32,7 +32,7 @@ public class MaterialMapper {
                 materialList.add(new Material(materialId, name, unit, description, price, length, materialVariantId));
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Database fejl", e.getMessage());
+            throw new DatabaseException("Database fejl1", e.getMessage());
         }
         return materialList;
     }

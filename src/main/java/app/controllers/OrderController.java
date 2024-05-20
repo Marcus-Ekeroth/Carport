@@ -46,6 +46,7 @@ public class OrderController {
             int orderId = OrderMapper.createOrder(ctx.sessionAttribute("currentUser"), width, length, roof, shippingAddress, connectionPool, price);
             saveBomlist(orderId, bomlist, connectionPool);
             ctx.attribute("message", "Order created successfully.");
+
             displayOrder(ctx, connectionPool);
 
         } catch (DatabaseException e) {
@@ -67,11 +68,12 @@ public class OrderController {
 
     //Metode for at admin kan ændre pris på order
     private static void updatePrice(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        int orderId = ctx.sessionAttribute("orderId");
         double price = Double.parseDouble(ctx.formParam("newprice"));
 
         OrderMapper.updatePrice(orderId, price, connectionPool);
-        ctx.attribute("orderDetails", OrderMapper.getOrderById(orderId, connectionPool));
+        Order order = OrderMapper.getOrderById(orderId, connectionPool);
+        ctx.attribute("orderDetails", order);
         ctx.attribute("oldprice", ctx.sessionAttribute("oldprice"));
         ctx.attribute("orderlines", BomMapper.getBomlistById(orderId,connectionPool).getOrderLines());
         ctx.render("details.html");
@@ -79,16 +81,21 @@ public class OrderController {
 
     private static void changeStatus(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         try {
-            int orderId = Integer.parseInt(ctx.formParam("order_id"));
+            int orderId = ctx.sessionAttribute("orderId");
             int orderStatus = Integer.parseInt(ctx.formParam("orderStatus"));
             OrderMapper.changeStatus(orderId, orderStatus, connectionPool);
             Order order = OrderMapper.getOrderById(orderId, connectionPool);
             ctx.attribute("orderDetails", order);
-            ctx.attribute("oldprice", ctx.sessionAttribute("oldprice"));
             ctx.attribute("orderlines", BomMapper.getBomlistById(orderId,connectionPool).getOrderLines());
+            ctx.attribute("oldprice", ctx.sessionAttribute("oldprice"));
             ctx.render("details.html");
         } catch (NumberFormatException e) {
             ctx.attribute("message", "Vælg en status");
+            int orderId = ctx.sessionAttribute("orderId");
+            Order order = OrderMapper.getOrderById(orderId, connectionPool);
+            ctx.attribute("orderDetails", order);
+            ctx.attribute("orderlines", BomMapper.getBomlistById(orderId,connectionPool).getOrderLines());
+            ctx.attribute("oldprice", ctx.sessionAttribute("oldprice"));
             ctx.render("details.html");
         }
 
@@ -133,6 +140,7 @@ public class OrderController {
 
     private static void deleteOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException{
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        BomMapper.deleteBomlistById(orderId, connectionPool);
         OrderMapper.deleteOrderById(orderId, connectionPool);
         displayOrder(ctx, connectionPool);
     }

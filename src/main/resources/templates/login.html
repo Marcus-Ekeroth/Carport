@@ -15,7 +15,7 @@
     <input type="text" name="email" placeholder="Skriv email"/>
     <input type="password" name="password" placeholder="Skriv kodeord"/>
 
-    <button type="submit" formaction="/loggingon" class="linkbutton">Log på</button>
+    <button type="submit" formaction="/loggingon" class="linkbutton centered-button">Log på</button>
 
     <div>
         <p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p>
@@ -25,7 +25,7 @@
 <div th:if="${session.currentUser != null}">
     <span th:text="${session.currentUser.username}"></span>
     <form method="post">
-        <button formaction="/logout" class="linkbutton" type="submit">Log ud</button>
+        <button formaction="/logout" class="linkbutton centered-button" type="submit">Log ud</button>
     </form>
 
 </div>

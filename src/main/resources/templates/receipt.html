@@ -12,11 +12,11 @@
 </form>
 
 
-<h1>Tak for din bestilling, <span th:text="${session.currentUser.email} + '!'"></span></h1>
+<h1 class="oversigt">Tak for din bestilling, <span th:text="${session.currentUser.email} + '!'"></span></h1>
 
-<h1>Din order:</h1>
+<h1 class="oversigt">Din order:</h1>
 
-<table class="order-table">
+<table class="orderReceipt-table">
     <thead>
     <tr>
         <th>Ordre ID</th>
@@ -40,16 +40,14 @@
         <td th:text="${payedOrder.price}">price</td>
         <td th:text="${payedOrder.status}">status</td>
 
-        <td>
 
-        </td>
-        <!-- VI MANGLER SÆLGER DER GIVER RABAT EVT. PÅ EN ANDEN HTML SIDE -->
+
     </tr>
     </tbody>
 </table>
 
-<h2>Stykliste:</h2>
-<table class="order-table">
+<h2 class="oversigt">Stykliste:</h2>
+<table class="orderReceipt-table">
     <thead>
     <tr>
         <th>Materiale ID</th>
@@ -76,7 +74,7 @@
         <td th:text="${bom.getMaterial().getMaterialVariantId()}">material variant id</td>
         <td th:text="${bom.getAmount()}">amount</td>
 
-        <td>
+
 
     </tr>
 </table>
@@ -84,7 +82,7 @@
 
 <div class="button-container2">
     <form method="post">
-        <button formaction="/logout" class="linkbutton" type="submit">Log ud</button>
+        <button formaction="/logout" class="linkbutton centered-button" type="submit">Log ud</button>
     </form>
 </div>
 </body>

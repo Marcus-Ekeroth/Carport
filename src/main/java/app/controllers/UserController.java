@@ -73,10 +73,10 @@ public class UserController {
                 UserMapper.createuser(name, email, password1, address, postalcode, city, phonenumber, connectionPool);
                 ctx.attribute("message", "Ny bruger lavet.");
                 ctx.render("index.html");
-        } else{
-            ctx.attribute("message", "Passwords matcher ikke");
-            ctx.render("createuser.html");
-        }
+            } else{
+                ctx.attribute("message", "Passwords matcher ikke");
+                ctx.render("createuser.html");
+            }
         }catch(DatabaseException e){
             ctx.attribute("message", e.getMessage());
             ctx.render("createuser.html");
@@ -102,10 +102,12 @@ public class UserController {
 
     private static void details(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        ctx.sessionAttribute("orderId", orderId);
         Order order = OrderMapper.getOrderById(orderId, connectionPool);
+
         ctx.attribute("orderDetails", order);
         ctx.sessionAttribute("oldprice", ctx.formParam("oldprice"));
-        ctx.attribute("oldprice", ctx.sessionAttribute("oldprice"));
+        ctx.attribute("oldprice", ctx.formParam("oldprice"));
         ctx.attribute("orderlines", BomMapper.getBomlistById(orderId,connectionPool).getOrderLines());
         ctx.render("details.html");
     }
