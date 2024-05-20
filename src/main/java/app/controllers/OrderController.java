@@ -133,6 +133,7 @@ public class OrderController {
 
     private static void deleteOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException{
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        BomMapper.deleteBomlistById(orderId, connectionPool);
         OrderMapper.deleteOrderById(orderId, connectionPool);
         displayOrder(ctx, connectionPool);
     }

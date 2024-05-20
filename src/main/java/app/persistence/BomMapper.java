@@ -63,4 +63,22 @@ public class BomMapper {
         }
         return bomlist;
     }
+
+    public static void deleteBomlistById(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "delete from bom where order_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, orderId);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected < 0) {
+                throw new DatabaseException("Fejl i opdatering af en orderline");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl ved sletning af en task", e.getMessage());
+        }
+    }
+
 }
