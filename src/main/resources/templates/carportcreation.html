@@ -13,7 +13,7 @@
     <button class="logo"  type="submit" formaction="/index"></button>
 </form>
 
-<div th:if="${session.currentUser != null}">
+<div class="oversigt" th:if="${session.currentUser != null}">
 <p>Hej, <span th:text="${session.currentUser.email}"></span></p>
 </div>
 <form class="CarportCreation" method="post">
@@ -71,28 +71,25 @@
     <textarea name="ShippingAddress"> </textarea>
 
     <div>
-        <button formaction="/showCarport">Vis tegning</button>
+        <button class="linkbutton centered-button" formaction="/showCarport">Vis tegning</button>
     </div>
     <div th:if="${session.currentUser != null}">
-    <button class="linkbutton" type="submit" formaction="/createOrder">Bestil tilbud</button>
+    <button class="linkbutton centered-button" type="submit" formaction="/createOrder">Bestil tilbud</button>
     </div>
     <div th:if="${session.currentUser == null}">
         <button name="buttonValue" value="2" class="linkbutton centered-button" type="submit" formaction="/login">Log ind</button>
         <input type="hidden" formaction="/saveSelected"/>
+    </div>
+    <div th:if="${session.currentUser != null}">
+        <button type="submit" name="buttonValue" formaction="/mysite" class="linkbutton centered-button">Min side</button>
     </div>
 </form>
 
 <div><p th:text="${message}"></p></div>
 
 <div th:if="${session.currentUser != null}">
-    <form class="CarportCreation" method="post">
+    <form class="CarportCreation-button" method="post">
         <button formaction="/logout" class="linkbutton centered-button" type="submit">Log ud</button>
-    </form>
-</div>
-
-<div th:if="${session.currentUser != null}">
-    <form  class="CarportCreation" method="post">
-        <button type="submit" name="buttonValue" formaction="/mysite" class="linkbutton centered-button">Min side</button>
     </form>
 </div>
 
