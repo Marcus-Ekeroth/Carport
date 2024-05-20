@@ -18,11 +18,11 @@
         <button class="linkbutton centered-button" type="submit" formaction="/carportcreationpage">Bestil Special mål Carport</button>
     </form>
     <form method="get" action="https://www.johannesfog.dk/have-fritid/carporte">
-        <button class="linkbutton centered-button" type="submit">Carport</button>
+        <button class="linkbutton centered-button1" type="submit">Carport</button>
     </form>
     <div th:if="${session.currentUser == null}">
     <form method="post">
-        <button type="submit" name="buttonValue" value="1" formaction="/login" class="linkbutton centered-button">Log ind</button>
+        <button type="submit" name="buttonValue" value="1" formaction="/login" class="linkbutton centered-button1">Log ind</button>
 
     </form>
     </div>
@@ -33,12 +33,12 @@
     </div>
     <div th:if="${session.currentUser != null}">
         <form method="post">
-            <button type="submit" name="buttonValue" formaction="/mysite" class="linkbutton centered-button">Min side</button>
+            <button type="submit" name="buttonValue" formaction="/mysite" class="linkbutton centered-button1">Min side</button>
         </form>
     </div>
     <div th:if="${session.currentUser == null}">
         <form method="post">
-            <button type="submit" name="buttonValue" value="3" formaction="/login" class="linkbutton centered-button">Min side</button>
+            <button type="submit" name="buttonValue" value="3" formaction="/login" class="linkbutton centered-button1">Min side</button>
         </form>
     </div>
 
