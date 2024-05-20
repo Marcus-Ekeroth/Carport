@@ -73,10 +73,10 @@ public class UserController {
                 UserMapper.createuser(name, email, password1, address, postalcode, city, phonenumber, connectionPool);
                 ctx.attribute("message", "Ny bruger lavet.");
                 ctx.render("index.html");
-        } else{
-            ctx.attribute("message", "Passwords matcher ikke");
-            ctx.render("createuser.html");
-        }
+            } else{
+                ctx.attribute("message", "Passwords matcher ikke");
+                ctx.render("createuser.html");
+            }
         }catch(DatabaseException e){
             ctx.attribute("message", e.getMessage());
             ctx.render("createuser.html");
