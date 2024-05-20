@@ -99,6 +99,7 @@
 </form>
 
 
+
 <form method="post">
     <button formaction="/logout" class="linkbutton" type="submit">Log ud</button>
 </form>
@@ -106,6 +107,8 @@
 <form class="generic-form" method="post">
     <button type="submit" formaction="/admin">Tilbage til oversigt</button>
 </form>
+
+<div><p th:text="${message}"></p></div>
 
 </body>
 </html>

@@ -102,10 +102,12 @@ public class UserController {
 
     private static void details(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        ctx.sessionAttribute("orderId", orderId);
         Order order = OrderMapper.getOrderById(orderId, connectionPool);
+
         ctx.attribute("orderDetails", order);
         ctx.sessionAttribute("oldprice", ctx.formParam("oldprice"));
-        ctx.attribute("oldprice", ctx.sessionAttribute("oldprice"));
+        ctx.attribute("oldprice", ctx.formParam("oldprice"));
         ctx.attribute("orderlines", BomMapper.getBomlistById(orderId,connectionPool).getOrderLines());
         ctx.render("details.html");
     }
