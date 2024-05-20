@@ -59,7 +59,7 @@ public class BomMapper {
             }
 
         } catch (SQLException e) {
-            throw new DatabaseException("Database fejl", e.getMessage());
+            throw new DatabaseException("Database fejl2", e.getMessage());
         }
         return bomlist;
     }

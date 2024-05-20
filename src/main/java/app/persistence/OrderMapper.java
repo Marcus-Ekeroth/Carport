@@ -32,7 +32,7 @@ public class OrderMapper {
                 orderList.add(new Order(orderId, price, width, length, roof, shippingAddress, userId, status));
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Database fejl", e.getMessage());
+            throw new DatabaseException("Database fejl3", e.getMessage());
         }
         return orderList;
     }
@@ -71,7 +71,7 @@ public class OrderMapper {
 
     public static List<Order> getUserOrder(User user,ConnectionPool connectionPool) throws DatabaseException {
         List<Order> orderUserList = new ArrayList<>();
-        String sql = "SELECT o.*, s.status FROM \"order\" o LEFT JOIN status s ON o.status_id = s.status_id WHERE o.user_id = ?;";
+        String sql = "SELECT o.*, s.status FROM public.\"order\" o LEFT JOIN status s ON o.status_id = s.status_id WHERE o.user_id = ?;";
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
@@ -91,10 +91,11 @@ public class OrderMapper {
                 orderUserList.add(new Order(orderId, price, width, length, roof, shippingAddress, userId, status));
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Database fejl", e.getMessage());
+            throw new DatabaseException("Database fejl4", e.getMessage());
         }
         return orderUserList;
     }
+
     public static void changeStatus(int orderId,int statusId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "UPDATE public.\"order\" SET status_id = ? WHERE order_id = ?";
         try (

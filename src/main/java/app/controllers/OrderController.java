@@ -46,6 +46,7 @@ public class OrderController {
             int orderId = OrderMapper.createOrder(ctx.sessionAttribute("currentUser"), width, length, roof, shippingAddress, connectionPool, price);
             saveBomlist(orderId, bomlist, connectionPool);
             ctx.attribute("message", "Order created successfully.");
+
             displayOrder(ctx, connectionPool);
 
         } catch (DatabaseException e) {
