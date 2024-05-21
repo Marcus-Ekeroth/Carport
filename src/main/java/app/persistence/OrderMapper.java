@@ -32,7 +32,7 @@ public class OrderMapper {
                 orderList.add(new Order(orderId, price, width, length, roof, shippingAddress, userId, status));
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Database fejl3", e.getMessage());
+            throw new DatabaseException("Database fejl", e.getMessage());
         }
         return orderList;
     }
@@ -69,14 +69,14 @@ public class OrderMapper {
         }
     }
 
-    public static List<Order> getUserOrder(User user,ConnectionPool connectionPool) throws DatabaseException {
+    public static List<Order> getUserOrder(User user, ConnectionPool connectionPool) throws DatabaseException {
         List<Order> orderUserList = new ArrayList<>();
         String sql = "SELECT o.*, s.status FROM public.\"order\" o LEFT JOIN status s ON o.status_id = s.status_id WHERE o.user_id = ?;";
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
-            ps.setInt(1,user.getUserId());
+            ps.setInt(1, user.getUserId());
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -86,12 +86,13 @@ public class OrderMapper {
                 int length = rs.getInt("length");
                 String roof = rs.getString("roof");
                 String shippingAddress = rs.getString("shipping_address");
-                int userId= rs.getInt(user.getUserId());
+                int userId = rs.getInt("user_id");
                 String status = rs.getString("status");
+
                 orderUserList.add(new Order(orderId, price, width, length, roof, shippingAddress, userId, status));
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Database fejl4", e.getMessage());
+            throw new DatabaseException("Database fejl", e.getMessage());
         }
         return orderUserList;
     }
