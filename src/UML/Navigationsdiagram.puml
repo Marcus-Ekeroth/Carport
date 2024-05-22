@@ -1,0 +1,33 @@
+@startuml
+:frontpage;
+if (existing user?) is (yes) then
+
+else (no)
+  :create user;
+
+endif
+:login;
+if (Admin?) is (yes) then
+repeat :AdminPage;
+repeat while(Details)
+
+else (no)
+
+
+repeat :CarportCreation;
+repeat while(CarportDrawing)
+
+:OrderOverview;
+
+
+  :Pay;
+
+  :Receipt;
+
+  ->no;
+endif
+:Logout;
+
+
+
+@enduml
