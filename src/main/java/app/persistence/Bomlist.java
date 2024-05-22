@@ -95,7 +95,7 @@ public class Bomlist {
     public void addRafters(int carportLength, int carportWidth, List<Material> woodList){
         List<Material> beams = new ArrayList<>();
         for (Material wood : woodList) {
-            if (wood.getMaterialId() == 5) {
+            if (wood.getMaterialId() == 22) {
                 beams.add(wood);
             }
         }
