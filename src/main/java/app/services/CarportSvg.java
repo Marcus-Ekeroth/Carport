@@ -1,14 +1,18 @@
 package app.services;
 
-import app.controllers.OrderController;
-
 public class CarportSvg {
     private int width;
     private int length;
     private Svg carportSvg;
+    private final int spaceBetweenRaftersAmount;
+    private final float spaceBetweenRafters;
 
-    private int spaceAmount;
-    private float spaceBetween;
+    private final int extraSpaceFront = 100;
+    private final int extraSpaceBehind = 30;
+    private final int maxPoleDis = 310;
+    private final int beamSpace = 35;
+    private final double rafterWidth = 4.5;
+    private final double poleWidth = 9.7;
 
     public CarportSvg(int width, int length) {
         this.width = width;
@@ -16,8 +20,8 @@ public class CarportSvg {
         carportSvg = new Svg(40, 40, "0 0 1000 1000", "75%");
         carportSvg.addRectangle(0, 0, width, length, "stroke-width:1px; stroke: #000000; fill: #ffffff");
 
-        spaceAmount = (int) Math.ceil(length/60);
-        spaceBetween = length/spaceAmount;
+        spaceBetweenRaftersAmount = (int) Math.ceil(length/60);
+        spaceBetweenRafters = length/ spaceBetweenRaftersAmount;
 
         addLines();
         addBeams();
@@ -29,51 +33,49 @@ public class CarportSvg {
 
     }
     private void addPoles() {
-        int maxStolpeDis = 310;
-        int extraSpaceFront = 100;
-        int extraSpaceBehind = 30;
-        if(length<=maxStolpeDis+2*extraSpaceBehind) {
-            carportSvg.addRectangle(30, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle(30, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle(length - 30, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle(length - 30, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-        }else if(length<=maxStolpeDis+extraSpaceFront+extraSpaceBehind){
-            carportSvg.addRectangle(100, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle(100, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle(length - 30, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle(length - 30, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-        }else if(length<=2*maxStolpeDis+extraSpaceFront+extraSpaceBehind){
-            carportSvg.addRectangle(100, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle(100, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle(length - 30, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle(length - 30, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
 
-            carportSvg.addRectangle((length - 30-100)/2+100, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle((length - 30-100)/2+100, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+        if(length<=maxPoleDis+2*extraSpaceBehind) {
+            carportSvg.addRectangle(extraSpaceBehind, beamSpace - (rafterWidth/ 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(extraSpaceBehind, width - beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(length - extraSpaceBehind, beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(length - extraSpaceBehind, width - beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+        }else if(length<=maxPoleDis+extraSpaceFront+extraSpaceBehind){
+            carportSvg.addRectangle(extraSpaceFront, beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(extraSpaceFront, width - beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(length - extraSpaceBehind, beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(length - extraSpaceBehind, width - beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+        }else if(length<=2*maxPoleDis+extraSpaceFront+extraSpaceBehind){
+            carportSvg.addRectangle(extraSpaceFront, beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(extraSpaceFront, width - beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(length - extraSpaceBehind, beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(length - extraSpaceBehind, width - beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
 
-        }else if(length<=3*maxStolpeDis+extraSpaceFront+extraSpaceBehind){
-            carportSvg.addRectangle(100, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle(100, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle(length - 30, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle(length - 30, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle((length - extraSpaceBehind-extraSpaceFront)/2+extraSpaceFront, beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle((length - extraSpaceBehind-extraSpaceFront)/2+extraSpaceFront, width - beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
 
-            carportSvg.addRectangle((length - 30-100)/3+100, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle((length - 30-100)/3+100, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle(2*(length - 30-100)/3+100, 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-            carportSvg.addRectangle(2*(length - 30-100)/3+100, width - 35 - (4.5 / 2), 9.7, 9.7, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+        }else if(length<=3*maxPoleDis+extraSpaceFront+extraSpaceBehind){
+            carportSvg.addRectangle(extraSpaceFront, beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(extraSpaceFront, width - beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(length - extraSpaceBehind, beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(length - extraSpaceBehind, width - beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+
+            carportSvg.addRectangle((length - extraSpaceBehind-extraSpaceFront)/3+extraSpaceFront, beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle((length - extraSpaceBehind-extraSpaceFront)/3+extraSpaceFront, width - beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(2*(length - extraSpaceBehind-extraSpaceFront)/3+extraSpaceFront, beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+            carportSvg.addRectangle(2*(length - extraSpaceBehind-extraSpaceFront)/3+extraSpaceFront, width - beamSpace - (rafterWidth / 2), poleWidth, poleWidth, "stroke-width:1px; stroke: #000000; fill: #ffffff");
         }
 
     }
     private void addBeams() {
-        carportSvg.addRectangle(0, 35, 4.5, length, "stroke-width:1px; stroke: #000000; fill: #ffffff");
-        carportSvg.addRectangle(0, width-35, 4.5, length, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+        carportSvg.addRectangle(0, beamSpace, rafterWidth, length, "stroke-width:1px; stroke: #000000; fill: #ffffff");
+        carportSvg.addRectangle(0, width-beamSpace, rafterWidth, length, "stroke-width:1px; stroke: #000000; fill: #ffffff");
 
     }
     private void addRafters(){
 
-        for (int i=0; i <=  spaceAmount; i++)
+        for (int i = 0; i <= spaceBetweenRaftersAmount; i++)
         {
-            carportSvg.addRectangle(i*spaceBetween,0,width,4.5,"stroke:#000000; fill: #ffffff");
+            carportSvg.addRectangle(i* spaceBetweenRafters,0,width,rafterWidth,"stroke:#000000; fill: #ffffff");
         }
     }
     public Svg getCarportSvg() {
@@ -81,8 +83,8 @@ public class CarportSvg {
     }
     public void addLines(){
 
-        carportSvg.addDashedLine(spaceBetween, 35, length-spaceBetween, width-35, "Stroke:#000000");
-        carportSvg.addDashedLine(spaceBetween, width-35, length-spaceBetween, 35, "Stroke:#000000");
+        carportSvg.addDashedLine(spaceBetweenRafters, beamSpace, length- spaceBetweenRafters, width-beamSpace, "Stroke:#000000");
+        carportSvg.addDashedLine(spaceBetweenRafters, width-beamSpace, length- spaceBetweenRafters, beamSpace, "Stroke:#000000");
     }
 
     @Override
