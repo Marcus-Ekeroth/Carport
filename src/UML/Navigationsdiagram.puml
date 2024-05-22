@@ -24,7 +24,7 @@ repeat while(CarportDrawing)
 
   :Receipt;
 
-  ->no;
+
 endif
 :Logout;
 
