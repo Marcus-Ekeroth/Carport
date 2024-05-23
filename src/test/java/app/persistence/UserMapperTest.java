@@ -73,7 +73,7 @@ class UserMapperTest {
         try
         {
             int expected=UserMapper.getAllUsers(connectionPool).size();
-            UserMapper.createuser("testname","test1@test.dk","1234","testadresse",0000,"testby" ,12345678, connectionPool);
+            UserMapper.createuser("testname","test2@test.dk","1234","testadresse",0000,"testby" ,12345678, connectionPool);
             int actual=UserMapper.getAllUsers(connectionPool).size();
             assertEquals(expected+1,actual);
         }

@@ -106,7 +106,6 @@ class OrderMapperTest {
             OrderMapper.createOrder(user,200,400,"tag","testadresse",connectionPool,2000);
             int newOrderCount = OrderMapper.getAllOrders(connectionPool).size();
 
-            // Verify the order count has increased by 1
             assertEquals(expected + 1, newOrderCount);
         }
         catch (DatabaseException e)
@@ -131,6 +130,4 @@ class OrderMapperTest {
             fail("Database fejl: " + e.getMessage());
         }
     }
-
-
 }
